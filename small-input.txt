@@ -1,1 +1,7 @@
-var1  _var_1  VAR_1_AB_2
+(char)n
+3+4
+llld[5]
+4*(5+3)
+(double)5
+-4
+0 || 1

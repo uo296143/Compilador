@@ -32,6 +32,16 @@ public class LexerHelper {
 		return 'e';
 	}
 
+	public static char lexemeToReal(String str) {
+		try {
+			return 'a';
+		}
+		catch(NumberFormatException e) {
+			System.out.println(e);
+		}
+		return 'e';
+	}
+
 	// TODO: Implement the lexemeToChar and lexemeToReal methods
 	
 }
