@@ -12,34 +12,24 @@ public class LexerHelper {
 		return -1;
 	}
 
-	public static double lexemeToDouble(String str) {
+	public static char lexemeToChar(String str) {
+		try {
+			return str.charAt(0);
+		}
+		catch(NumberFormatException e) {
+			System.out.println(e);
+		}
+		return 'e';
+	}
+
+	public static double lexemeToReal(String str) {
 		try {
 			return Double.parseDouble(str);
 		}
 		catch(NumberFormatException e) {
 			System.out.println(e);
 		}
-		return -1;
-	}
-
-	public static char lexemeToChar(String str) {
-		try {
-			return 'a';
-		}
-		catch(NumberFormatException e) {
-			System.out.println(e);
-		}
-		return 'e';
-	}
-
-	public static char lexemeToReal(String str) {
-		try {
-			return 'a';
-		}
-		catch(NumberFormatException e) {
-			System.out.println(e);
-		}
-		return 'e';
+		return -1.0;
 	}
 
 	// TODO: Implement the lexemeToChar and lexemeToReal methods

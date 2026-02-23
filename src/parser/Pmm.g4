@@ -1,14 +1,41 @@
 grammar Pmm;	
 
-program: expression*;
+program: definition* mainProgram
+         ;
+
+mainProgram: 'def' 'main' '(' ')' '->' 'None' ':' '{' (variableDefinition)* (statement)* '}'
+             ;
+
+definition: variableDefinition | functionDefinition
+            ;
+
+variableDefinition: ID (',' ID)* ':' type ';'
+                    | ID ':' 'struct' '{' (ID ':' type ';')* '}' ';'
+                    | ID ':' expression type';'
+                    ;
+
+functionDefinition: 'def' ID '(' (ID ':' simple_type)? (',' ID ':' simple_type )*  ')' '->' type ':' '{' (variableDefinition)* (statement)* '}'
+                    ;
+
+type: ('int'|'double'|'char'|'None')
+       ;
 
 statement: 'print' expression (',' expression )* ';'
            | 'input' expression (',' expression )* ';'
            | expression '=' expression ';'
-           |
+           | 'if' expression ':' '{' statement* '}' ( 'else' '{' statement* '}' )?
+           | 'if' expression ':' '{' statement '}' ( 'else' statement )?
+           | 'if' expression ':' statement ( 'else' ':' '{' statement* '}' )?
+           | 'if' expression ':' statement ( 'else' ':' statement )?
+           | 'while' expression ':' statement
+           | 'while' expression ':' '{' statement* '}'
+           | 'return' expression ';'
+           | functionInvocation ';'
+           ;
 
 expression: '(' expression ')'
-            | expression '[' expression ']'
+            | ID ('[' expression ']')+
+            | ('[' expression ']')+
             | expression '.' ID
             | '(' simple_type ')' expression
             | '-' expression
@@ -17,26 +44,18 @@ expression: '(' expression ')'
             | expression ('+'|'-') expression
             | expression ('>'|'>='|'<'|'<='|'!='|'==') expression
             | expression ('&&'|'||') expression
-            | function_invocation
+            | functionInvocation
             | INT_CONSTANT
             | CHAR_CONSTANT
             | REAL_CONSTANT
             | ID
             ;
 
-simple_type: 'char'|'double'|'int';
+simple_type: 'char'|'double'|'int'
+             ;
 
-function_invocation: ID '(' expression* ')'';';
-
-
-
-
-
-
-
-
-
-
+functionInvocation: ID '(' expression? (',' expression)* ')'
+                    ;
 
 
 

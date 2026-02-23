@@ -1,8 +1,11 @@
-package ast.statement.expression;
+package ast.statement;
+
+import ast.statement.expression.Expression;
+import ast.statement.expression.Variable;
 
 import java.util.List;
 
-public class FunctionInvocation implements Expression{
+public class FunctionInvocation implements Statement {
 
     private Variable function;
     private List<Expression> arguments;

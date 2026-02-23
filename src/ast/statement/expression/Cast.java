@@ -5,11 +5,9 @@ import ast.type.Type;
 
 public class Cast implements Expression {
 
-    private Assignment assignment;
     private Type castType;
 
-    public Cast(Assignment assignment, Type castType) {
-        this.assignment = assignment;
+    public Cast(Type castType) {
         this.castType = castType;
     }
 
