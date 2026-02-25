@@ -1,4 +1,4 @@
-(char)n
+r = (char)n
 3+4
 llld[5]
 4*(5+3)

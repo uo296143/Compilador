@@ -2,9 +2,9 @@ package ast.statement.expression.constants;
 
 import ast.statement.expression.Constant;
 
-public class CHAR_Constant extends Constant {
+public class DoubleLiteral extends Constant {
 
-    public CHAR_Constant(String value) {
+    public DoubleLiteral(String value) {
         super(value);
     }
 }
