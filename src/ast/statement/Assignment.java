@@ -6,10 +6,22 @@ public class Assignment implements Statement{
 
     private Expression rightExpression;
     private Expression leftExpression;
+    private int line, column;
 
-    public Assignment(Expression rightExpression, Expression leftExpression){
+    public Assignment(Expression rightExpression, Expression leftExpression, int line, int column){
         this.rightExpression = rightExpression;
         this.leftExpression = leftExpression;
+        this.line = line;
+        this.column = column;
     }
 
+    @Override
+    public int getLine() {
+        return line;
+    }
+
+    @Override
+    public int getColumn() {
+        return column;
+    }
 }

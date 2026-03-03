@@ -4,7 +4,7 @@ import ast.statement.Statement;
 
 import java.util.List;
 
-public class FunctionType {
+public class FunctionType implements Type{
 
     private Type returnType;
     private List<Statement> statements;

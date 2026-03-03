@@ -2,10 +2,23 @@ package ast.statement.expression;
 
 public class ArrayAccess implements Expression{
 
-    private Expression expression;
+    private Expression leftExpression, rightExpression;
+    private int line, column;
 
-    public ArrayAccess(Expression expression){
-        this.expression = expression;
+    public ArrayAccess(Expression leftExpression, Expression rightExpression, int line, int column){
+        this.leftExpression = leftExpression;
+        this.rightExpression = rightExpression;
+        this.line = line;
+        this.column = column;
     }
-    
+
+    @Override
+    public int getLine() {
+        return line;
+    }
+
+    @Override
+    public int getColumn() {
+        return column;
+    }
 }

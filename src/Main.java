@@ -1,4 +1,5 @@
 import ast.ASTNode;
+import ast.statement.expression.Expression;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
@@ -22,7 +23,7 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer); 
 		PmmParser parser = new PmmParser(tokens);	
 		// ASTNode ast = parser.program().ast;
-		ASTNode ast = parser.expression().ast;
+		Expression ast = parser.expression().ast;
 		
 		// * The AST is shown
 		IntrospectorModel model=new IntrospectorModel("Program", ast);

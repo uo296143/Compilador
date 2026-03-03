@@ -1,7 +1,11 @@
-// Generated from C:/Users/uo296143/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
-    import ast.statement,*;
+    import ast.definition.*;
+    import ast.statement.*;
+    import ast.type.*;
+    import ast.statement.expression.*;
+    import ast.statement.expression.constants.*;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
