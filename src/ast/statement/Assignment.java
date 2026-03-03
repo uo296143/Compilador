@@ -8,7 +8,7 @@ public class Assignment implements Statement{
     private Expression leftExpression;
     private int line, column;
 
-    public Assignment(Expression rightExpression, Expression leftExpression, int line, int column){
+    public Assignment(Expression leftExpression, Expression rightExpression, int line, int column){
         this.rightExpression = rightExpression;
         this.leftExpression = leftExpression;
         this.line = line;

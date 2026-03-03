@@ -8,8 +8,4 @@ public class CharLiteral extends Constant {
         super(value, line, column);
     }
 
-    public CharLiteral(String value) {
-        super(value);
-    }
-
 }

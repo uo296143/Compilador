@@ -1,4 +1,4 @@
-// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.definition.*;
@@ -94,6 +94,16 @@ public interface PmmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatement(PmmParser.StatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmmParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(PmmParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmmParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(PmmParser.BlockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PmmParser#expression}.
 	 * @param ctx the parse tree

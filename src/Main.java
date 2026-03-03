@@ -1,4 +1,5 @@
 import ast.ASTNode;
+import ast.statement.Statement;
 import ast.statement.expression.Expression;
 import parser.*;
 
@@ -23,7 +24,7 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer); 
 		PmmParser parser = new PmmParser(tokens);	
 		// ASTNode ast = parser.program().ast;
-		Expression ast = parser.expression().ast;
+		Statement ast = parser.statement().ast;
 		
 		// * The AST is shown
 		IntrospectorModel model=new IntrospectorModel("Program", ast);

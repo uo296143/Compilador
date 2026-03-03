@@ -11,15 +11,9 @@ public class IfElse implements Statement{
     private Expression ifExpression;
     private int line, column;
 
-    public IfElse(List<Statement> ifStatements, Expression ifExpression, int line, int column){
+    public IfElse(List<Statement> ifStatements, Expression ifExpression, List<Statement> elseStatements, int line, int column){
         this.ifStatements = ifStatements;
         this.ifExpression = ifExpression;
-        this.line = line;
-        this.column = column;
-    }
-
-    public IfElse(List<Statement> ifStatements, Expression ifExpression, List<Statement> elseStatements, int line, int column){
-        this(ifStatements, ifExpression, line, column);
         this.elseStatements = elseStatements;
         this.line = line;
         this.column = column;

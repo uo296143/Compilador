@@ -1,7 +1,7 @@
-r = (char)n
-3+4
-llld[5]
-4*(5+3)
-(double)5
--4
-0 || 1
+while pair.integer >= i: {
+    	if a:
+      		print 't', 'r', 'u', 'e', '\n';
+    	else:
+      		print 'f', 'a', 'l', 's', 'e', '\n';
+    	i=i+1;
+  	}

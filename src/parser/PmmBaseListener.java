@@ -1,4 +1,4 @@
-// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.definition.*;
@@ -115,6 +115,18 @@ public class PmmBaseListener implements PmmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStatement(PmmParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBlock(PmmParser.BlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBlock(PmmParser.BlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

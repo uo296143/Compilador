@@ -8,22 +8,26 @@ grammar Pmm;
     import ast.statement.expression.constants.*;
 }
 
-program returns [Program ast]: definition* mainProgram
+program returns [Program ast]: definition* mainProgram EOF
          ;
 
-mainProgram returns [Program ast]: 'def' 'main' '(' ')' '->' 'None' ':' '{' (variableDefinition)* (statement)* '}'
+mainProgram returns [Program ast] locals [List<Definition> definitions = new ArrayList<Definition>()]:
+                           'def' 'main' '(' ')' '->' 'None' ':' '{' ( variableDefinition {$definitions.addAll($variableDefinition.ast);} )*
+                           ( statement {$definitions.add($statement.ast);} )* '}'
+                           {$ast = new Program($definitions);}
              ;
 
 definition returns [Definition ast]: variableDefinition | functionDefinition
             ;
 
-variableDefinition returns [Definition ast, List<Statement> variableDefinitions = new ArrayList<Statement>()]: ID (',' ID)* ':' type ';'
+variableDefinition returns [List<VariableDefinition> ast]:
+                        ID (',' ID)* ':' type ';'
                     ;
 
-functionDefinition returns [FunctionDefinition ast, List<List<Statement>> statements = new ArrayList<List<Statement>>()]:
+functionDefinition returns [FunctionDefinition ast] locals [List<Statement> statements = new ArrayList<Statement>(), Type returnType]:
                            'def' ID '(' parameters?  ')' '->' (simple_type|'None') ':'
-                           '{' (variableDefinition)* {$variableDefinition.variableDefinitions.foreach( variableDefinitions -> $statements.add(variableDefinitions) );}
-                           (statement)* '}' {$statement.ast.foreach( statement -> $statements.add($statement) );}
+                           '{' (variableDefinition)* {$statements.addAll($variableDefinition.ast);}
+                           (statement {$statements.add($statement.ast);})* '}'
                            /* Aquí hay que comprobar si simple_type es null. ¿ Y también si parameters lo es ? */
                            {$ast = new FunctionDefinition($statements, new Variable($ID.text, new FunctionType($simple_type.ast, $parameters.ast);}
                     ;
@@ -37,23 +41,22 @@ type returns [Type ast, List<Field> fields = new ArrayList<Field>()]: st1=simple
     | '[' INT_CONSTANT ']' t1=type {$ast = new Array($ast = t1, $INT_CONSTANT.text);}
      ;
 
-statement returns [Statement ast]: 'print' expressions? ';' {$ast = new Print($expressions.ast, $expressions.ast.getLine(), $expressions.ast.getColumn());}
-           | 'input' expressions? ';' {$ast = new Input($expressions.ast, $expressions.ast.getLine(), $expressions.ast.getColumn());}
+statement returns [Statement ast]: 'print' expressions? ';' {$ast = new Print($expressions.ast, $expressions.ast.get(0).getLine(), $expressions.ast.get(0).getColumn());}
+           | 'input' expressions? ';' {$ast = new Input($expressions.ast, $expressions.ast.get(0).getLine(), $expressions.ast.get(0).getColumn());}
            | ex1=expression '=' ex2=expression ';' {$ast = new Assignment($ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
-           | 'if' ex1=expression ':' '{' stmt1=statement* '}' ( 'else' '{' stmt2=statement* '}' )?
-           | 'if' ex1=expression ':' '{' stmt1=statement* '}' ( 'else' stmt2=statement )?
-           | 'if' ex1=expression ':' stmt1=statement ( 'else' ':' '{' stmt2=statement* '}' )?
-           | 'if' ex1=expression ':' stmt1=statement ( 'else' ':' stmt2=statement )?
-           | 'while' ex1=expression ':' stmt1=statement {$ast = new While($ex1.ast, $stmt1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
-           | 'while' ex1=expression ':' '{' stmt1=statement* '}'
+           | 'if' ex1=expression ':' b1=block ( 'else' ':' b2=block )? {$ast = new IfElse($b1.ast, $ex1.ast, $b2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
+           | 'while' ex1=expression ':' b1=block {$ast = new While($b1.ast, $ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
            | 'return' ex1=expression ';' {$ast = new Return($ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
            | fi1=functionInvocation ';' {$ast = $fi1.ast;}
            ;
 
+block returns [List<Statement> ast = new ArrayList<Statement>()]: statement {$ast.add($statement.ast);}
+        | '{' (statement {$ast.add($statement.ast);}) * '}'
+        ;
 
-expression returns [Expression ast]: '(' ex1=expression ')' {$ast = new ArrayAccess($ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
+expression returns [Expression ast]: '(' ex1=expression ')' {$ast = $ex1.ast;}
             | ex1=expression '[' ex2=expression ']' {$ast = new ArrayAccess($ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
-            | ex1=expression '.' ID {$ast = new Point($expression.ast, $ID.text, $ex1.ast.getLine(), $ex1.ast.getColumn());}
+            | ex1=expression '.' ID {$ast = new Point($ex1.ast, $ID.text, $ex1.ast.getLine(), $ex1.ast.getColumn());}
             | '(' simple_type ')' ex1=expression {$ast = new Cast($expression.ast, $simple_type.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
             | '-' ex1=expression {$ast = new NotArithmetic($ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
             | '!' ex1=expression {$ast = new NotLogic($expression.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
@@ -62,9 +65,9 @@ expression returns [Expression ast]: '(' ex1=expression ')' {$ast = new ArrayAcc
             | ex1=expression OP=('>'|'>='|'<'|'<='|'!='|'==') ex2=expression {$ast = new ComparativeOperator($OP.text, $ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
             | ex1=expression OP=('&&'|'||') ex2=expression {$ast = new LogicalOperator($OP.text, $ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
             | functionInvocation
-            | INT_CONSTANT {$ast = new IntLiteral($INT_CONSTANT.text);}
-            | CHAR_CONSTANT {$ast = new CharLiteral($CHAR_CONSTANT.text);}
-            | REAL_CONSTANT {$ast = new DoubleLiteral($REAL_CONSTANT.text);}
+            | INT_CONSTANT {$ast = new IntLiteral($INT_CONSTANT.text, $INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine()+1);}
+            | CHAR_CONSTANT {$ast = new CharLiteral($CHAR_CONSTANT.text, $CHAR_CONSTANT.getLine(), $CHAR_CONSTANT.getCharPositionInLine()+1);}
+            | REAL_CONSTANT {$ast = new DoubleLiteral($REAL_CONSTANT.text, $REAL_CONSTANT.getLine(), $REAL_CONSTANT.getCharPositionInLine()+1);}
             | ID {$ast = new Variable($ID.text);}
             ;
 
