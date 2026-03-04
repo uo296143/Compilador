@@ -9,8 +9,12 @@ public class Print implements Statement{
     private List<Expression> expressions;
     private int line, column;
 
-    public Print(List<Expression> expressions, int line, int column){
+    public Print(List<Expression> expressions){
         this.expressions = expressions;
+    }
+
+    public Print(List<Expression> expressions, int line, int column){
+        this(expressions);
         this.line = line;
         this.column = column;
     }

@@ -7,14 +7,17 @@ import java.util.List;
 
 public class VariableDefinition implements Definition, Statement {
 
-    // private List<Statement> statements;
-    private Type type; // Será siempre un FunctionType
+    private Type type;
     private String name;
     private int line, column;
 
-    public VariableDefinition(Type type, String name, int line, int column) {
+    public VariableDefinition(Type type, String name) {
         this.type = type;
         this.name = name;
+    }
+
+    public VariableDefinition(Type type, String name, int line, int column) {
+        this(type, name);
         this.line = line;
         this.column = column;
     }

@@ -1,6 +1,7 @@
-// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
+    import ast.*;
     import ast.definition.*;
     import ast.statement.*;
     import ast.type.*;

@@ -14,7 +14,7 @@ public class LexerHelper {
 
 	public static char lexemeToChar(String str) {
 		try {
-			return str.charAt(0);
+			return str.charAt(1);
 		}
 		catch(NumberFormatException e) {
 			System.out.println(e);

@@ -5,7 +5,7 @@ import ast.statement.expression.Variable;
 
 import java.util.List;
 
-public class FunctionInvocation implements Statement {
+public class FunctionInvocation implements Statement, Expression {
 
     private Variable function;
     private List<Expression> arguments;

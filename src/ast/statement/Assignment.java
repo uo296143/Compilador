@@ -4,8 +4,8 @@ import ast.statement.expression.Expression;
 
 public class Assignment implements Statement{
 
-    private Expression rightExpression;
     private Expression leftExpression;
+    private Expression rightExpression;
     private int line, column;
 
     public Assignment(Expression leftExpression, Expression rightExpression, int line, int column){

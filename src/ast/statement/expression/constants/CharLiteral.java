@@ -1,11 +1,26 @@
 package ast.statement.expression.constants;
 
-import ast.statement.expression.Constant;
+import ast.statement.expression.Expression;
+import parser.LexerHelper;
 
-public class CharLiteral extends Constant {
+public class CharLiteral implements Expression {
+
+    private char value;
+    private int line, column;
 
     public CharLiteral(String value, int line, int column) {
-        super(value, line, column);
+        this.value = LexerHelper.lexemeToChar(value);
+        this.line = line;
+        this.column = column;
     }
 
+    @Override
+    public int getLine() {
+        return line;
+    }
+
+    @Override
+    public int getColumn() {
+        return column;
+    }
 }

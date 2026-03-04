@@ -6,15 +6,15 @@ import java.util.List;
 
 public class IfElse implements Statement{
 
-    private List<Statement> ifStatements;
-    private List<Statement> elseStatements;
-    private Expression ifExpression;
+    private List<Statement> ifBody;
+    private List<Statement> elseBody;
+    private Expression expression;
     private int line, column;
 
-    public IfElse(List<Statement> ifStatements, Expression ifExpression, List<Statement> elseStatements, int line, int column){
-        this.ifStatements = ifStatements;
-        this.ifExpression = ifExpression;
-        this.elseStatements = elseStatements;
+    public IfElse(List<Statement> ifBody, Expression expression, List<Statement> elseBody, int line, int column){
+        this.ifBody = ifBody;
+        this.expression = expression;
+        this.elseBody = elseBody;
         this.line = line;
         this.column = column;
     }

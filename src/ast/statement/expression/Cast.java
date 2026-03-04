@@ -10,7 +10,6 @@ public class Cast implements Expression {
     private int line, column;
 
     public Cast(Expression expression,Type castType, int line, int column) {
-
         this.expression = expression;
         this.castType = castType;
         this.line = line;

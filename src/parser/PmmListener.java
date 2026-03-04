@@ -1,6 +1,7 @@
-// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
+    import ast.*;
     import ast.definition.*;
     import ast.statement.*;
     import ast.type.*;
@@ -25,15 +26,15 @@ public interface PmmListener extends ParseTreeListener {
 	 */
 	void exitProgram(PmmParser.ProgramContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PmmParser#mainProgram}.
+	 * Enter a parse tree produced by {@link PmmParser#mainFunction}.
 	 * @param ctx the parse tree
 	 */
-	void enterMainProgram(PmmParser.MainProgramContext ctx);
+	void enterMainFunction(PmmParser.MainFunctionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PmmParser#mainProgram}.
+	 * Exit a parse tree produced by {@link PmmParser#mainFunction}.
 	 * @param ctx the parse tree
 	 */
-	void exitMainProgram(PmmParser.MainProgramContext ctx);
+	void exitMainFunction(PmmParser.MainFunctionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PmmParser#definition}.
 	 * @param ctx the parse tree
@@ -124,16 +125,6 @@ public interface PmmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSimple_type(PmmParser.Simple_typeContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmmParser#functionInvocation}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionInvocation(PmmParser.FunctionInvocationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmmParser#functionInvocation}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionInvocation(PmmParser.FunctionInvocationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PmmParser#expressions}.
 	 * @param ctx the parse tree

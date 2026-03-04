@@ -1,6 +1,7 @@
-// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
+    import ast.*;
     import ast.definition.*;
     import ast.statement.*;
     import ast.type.*;
@@ -36,13 +37,13 @@ public class PmmBaseListener implements PmmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMainProgram(PmmParser.MainProgramContext ctx) { }
+	@Override public void enterMainFunction(PmmParser.MainFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMainProgram(PmmParser.MainProgramContext ctx) { }
+	@Override public void exitMainFunction(PmmParser.MainFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -151,18 +152,6 @@ public class PmmBaseListener implements PmmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSimple_type(PmmParser.Simple_typeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionInvocation(PmmParser.FunctionInvocationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionInvocation(PmmParser.FunctionInvocationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
