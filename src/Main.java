@@ -1,6 +1,5 @@
 import ast.ASTNode;
-import ast.statement.Statement;
-import ast.statement.expression.Expression;
+import ast.errorhandler.ErrorHandler;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
@@ -24,9 +23,16 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer); 
 		PmmParser parser = new PmmParser(tokens);	
 		ASTNode ast = parser.program().ast;
-
-		// * The AST is shown
-		IntrospectorModel model=new IntrospectorModel("Program", ast);
-		new IntrospectorView("Introspector", model);
+		
+		// * Check errors
+		/*if(ErrorHandler.getInstance().anyError()){
+			// * Show errors
+			ErrorHandler.getInstance().showErrors(System.err);
+		}
+		else{*/
+			// * The AST is shown
+			IntrospectorModel model=new IntrospectorModel("Program", ast);
+			new IntrospectorView("Introspector", model);
+		//}
 	}
 }

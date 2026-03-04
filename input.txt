@@ -44,8 +44,8 @@ def main() -> None: {
   	while pair.integer >= i: {
     	if pair.integer == vector[0][0] || !(int)pair.character || i%2==0:
       		print 't', 'r', 'u', 'e', '\n';
-    	else: 
-      		print 'f', 'a', 'l', 's', 'e', '\n';
+    	# else:
+      		# print 'f', 'a', 'l', 's', 'e', '\n';
     	i=i+1;
   	}
   	print f(i, i); # Invocation as an expression

@@ -8,24 +8,26 @@ import java.util.List;
 public class FunctionDefinition implements Definition {
 
     private List<Statement> statements;
-    private VariableDefinition variable;
+    private String name;
+    private Type type;
     private int line, column;
 
-    public FunctionDefinition(List<Statement> statements, VariableDefinition variable, int line, int column) {
+    public FunctionDefinition(List<Statement> statements, String name, Type type, int line, int column) {
         this.statements = statements;
-        this.variable = variable;
+        this.name = name;
+        this.type = type;
         this.line = line;
         this.column = column;
     }
 
     @Override
     public Type getType() {
-        return variable.getType();
+        return type;
     }
 
     @Override
     public String getName() {
-        return variable.getName();
+        return name;
     }
 
     @Override

@@ -20,7 +20,7 @@ program returns [Program ast] locals [List<Definition> definitions = new ArrayLi
 mainFunction returns [FunctionDefinition ast] locals [List<Statement> statements = new ArrayList<Statement>()]:
                      'def' MAIN='main' '(' ')' '->' 'None' ':' '{' ( variableDefinition {$statements.addAll($variableDefinition.ast);} )*
                      ( statement {$statements.add($statement.ast);} )* '}'
-                     {$ast = new FunctionDefinition($statements, new VariableDefinition(new FunctionType(new None(), new ArrayList<Statement>()), "main", $MAIN.getLine(), $MAIN.getCharPositionInLine()+1), $MAIN.getLine(), $MAIN.getCharPositionInLine()+1);}
+                     {$ast = new FunctionDefinition($statements, "main", new FunctionType(new None(), new ArrayList<Statement>()), $MAIN.getLine(), $MAIN.getCharPositionInLine()+1);}
                      ;
 
 definition returns [List<Definition> ast = new ArrayList<Definition>()]: variableDefinition {$ast.addAll($variableDefinition.ast);}
@@ -38,22 +38,33 @@ functionDefinition returns [FunctionDefinition ast] locals [List<Statement> stat
                            'def' ID '(' (parameters {$functionParameters = $parameters.ast;}) ?  ')' '->' (simple_type {$returnType = $simple_type.ast;} |'None') ':'
                            '{' (variableDefinition {$statements.addAll($variableDefinition.ast);} )*
                            ( statement {$statements.add($statement.ast);} )* '}'
-                           {$ast = new FunctionDefinition($statements, new VariableDefinition(new FunctionType($returnType, $functionParameters), $ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1), $ID.getLine(), $ID.getCharPositionInLine() + 1);}
+                           {$ast = new FunctionDefinition($statements, $ID.text, new FunctionType($returnType, $functionParameters), $ID.getLine(), $ID.getCharPositionInLine() + 1);}
                            ;
 
-parameters returns [List<Statement> ast = new ArrayList<Statement>()]: (ID ':' st1=simple_type) {$ast.add(new VariableDefinition($st1.ast, $ID.text,  $ID.getLine(), $ID.getCharPositionInLine() + 1));}
-                   (',' ID ':' st2=simple_type )* {$ast.add(new VariableDefinition($st2.ast, $ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1));}
+parameters returns [List<Statement> ast = new ArrayList<Statement>()] : (ID ':' st1=simple_type) {$ast.add(new VariableDefinition($st1.ast, $ID.text,  $ID.getLine(), $ID.getCharPositionInLine() + 1));}
+                   (',' ID ':' st2=simple_type {$ast.add(new VariableDefinition($st2.ast, $ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1));} )*
                    ;
 
-type returns [Type ast] locals [List<Field> fields = new ArrayList<Field>()]: st1=simple_type {$ast = $st1.ast;}
+/*type returns [Type ast] locals [List<Field> fields = new ArrayList<Field>()]: st1=simple_type {$ast = $st1.ast;}
              | 'struct' '{' ( ID ':' t1=type ';'{$fields.add(new Field($ID.text, $t1.ast));} )* '}' {$ast = new StructType($fields);}
+             | '[' INT_CONSTANT ']' t1=type {$ast = new ArrayType($t1.ast, $INT_CONSTANT.text);}
+             ;*/
+
+type returns [Type ast] locals [List<Field> sFields = new ArrayList<Field>()]: st1=simple_type {$ast = $st1.ast;}
+             | 'struct' '{' ( fields ';' {$sFields.addAll($fields.ast);} )* '}' {$ast = new StructType($sFields);}
              | '[' INT_CONSTANT ']' t1=type {$ast = new ArrayType($t1.ast, $INT_CONSTANT.text);}
              ;
 
-statement returns [Statement ast] locals [List<Expression> exp = new ArrayList<Expression>()]: PRINT='print' expressions? ';' {$ast = new Print($expressions.ast, $PRINT.getLine(), $PRINT.getCharPositionInLine()+1);}
+fields returns [List<Field> ast = new ArrayList<Field>()] locals [List<String> fieldNames = new ArrayList<String>()]:
+               ID {$fieldNames.add($ID.text);} (',' ID {$fieldNames.add($ID.text);} )* ':' t1=type
+               {$fieldNames.forEach( name -> $ast.add(new Field(name, $t1.ast)));}
+               ;
+
+statement returns [Statement ast] locals [List<Expression> exp = new ArrayList<Expression>(), List<Statement> elseBody = new ArrayList<Statement>()]:
+                   PRINT='print' expressions? ';' {$ast = new Print($expressions.ast, $PRINT.getLine(), $PRINT.getCharPositionInLine()+1);}
                   | INPUT='input' expressions? ';' {$ast = new Input($expressions.ast, $INPUT.getLine(), $INPUT.getCharPositionInLine()+1);}
                   | ex1=expression '=' ex2=expression ';' {$ast = new Assignment($ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
-                  | 'if' ex1=expression ':' b1=block ( 'else' ':' b2=block )? {$ast = new IfElse($b1.ast, $ex1.ast, $b2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
+                  | 'if' ex1=expression ':' b1=block ( 'else' ':' b2=block {$elseBody = $b2.ast;} )? {$ast = new IfElse($b1.ast, $ex1.ast, $elseBody, $ex1.ast.getLine(), $ex1.ast.getColumn());}
                   | 'while' ex1=expression ':' b1=block {$ast = new While($b1.ast, $ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
                   | 'return' ex1=expression ';' {$ast = new Return($ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
                   | ID '(' (expressions {$exp = $expressions.ast;}) ? ')' ';' {$ast = new FunctionInvocation(new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine()+1), $exp, $ID.getLine(), $ID.getCharPositionInLine()+1);}
@@ -125,7 +136,7 @@ BLOCK_COMMENT:  '"""'.*?'"""' -> skip;
 ID: ('_'|LETTER)(LETTER|'_'|INT_CONSTANT)*;
 
 REAL_CONSTANT: REAL_SIMPLE_CONSTANT |
-               (REAL_SIMPLE_CONSTANT|INT_PART) [eE] [-]? INT_PART;
+               (REAL_SIMPLE_CONSTANT|INT_PART) [eE] [-+]? INT_PART;
 
 CHAR_CONSTANT:'\'' .? '\'' |
               '\'\\' [nt] '\'' |

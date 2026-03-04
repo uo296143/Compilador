@@ -13,6 +13,7 @@ public class Variable implements Expression{
     }
 
     public Variable(String name, int line, int column){
+        this.name=name;
         this.line = line;
         this.column = column;
     }
