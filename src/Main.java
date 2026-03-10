@@ -1,5 +1,5 @@
 import ast.ASTNode;
-import ast.errorhandler.ErrorHandler;
+import errorhandler.ErrorHandler;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
@@ -25,14 +25,14 @@ public class Main {
 		ASTNode ast = parser.program().ast;
 		
 		// * Check errors
-		/*if(ErrorHandler.getInstance().anyError()){
+		if(ErrorHandler.getInstance().anyError()){
 			// * Show errors
 			ErrorHandler.getInstance().showErrors(System.err);
 		}
-		else{*/
+		else{
 			// * The AST is shown
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorView("Introspector", model);
-		//}
+		}
 	}
 }

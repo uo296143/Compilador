@@ -12,8 +12,9 @@ public class ErrorType {
         this.locatable = locatable;
     }
 
-    // Línea y columna del error
+    @Override
     public String toString(){
-        return "";
+        return message + ". En la línea: " + locatable.getLine() + " y Columna: " + locatable.getColumn();
     }
+
 }

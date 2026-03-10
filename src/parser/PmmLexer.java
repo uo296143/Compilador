@@ -1,4 +1,4 @@
-// Generated from C:/Users/uo296143/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.*;
@@ -7,6 +7,7 @@ package parser;
     import ast.type.*;
     import ast.statement.expression.*;
     import ast.statement.expression.constants.*;
+    import errorhandler.*;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -56,7 +57,7 @@ public class PmmLexer extends Lexer {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'def'", "'main'", "'('", "')'", "'->'", "'None'", "':'", "'{'", 
-			"'}'", "','", "';'", "'struct'", "'['", "']'", "'print'", "'input'", 
+			"'}'", "';'", "','", "'struct'", "'['", "']'", "'print'", "'input'", 
 			"'='", "'if'", "'else'", "'while'", "'return'", "'.'", "'-'", "'!'", 
 			"'*'", "'/'", "'%'", "'+'", "'>'", "'>='", "'<'", "'<='", "'!='", "'=='", 
 			"'&&'", "'||'", "'char'", "'double'", "'int'"
@@ -237,8 +238,8 @@ public class PmmLexer extends Lexer {
 		"{\f\u0001\u0000\u0000\u0000|}\u0005:\u0000\u0000}\u000e\u0001\u0000\u0000"+
 		"\u0000~\u007f\u0005{\u0000\u0000\u007f\u0010\u0001\u0000\u0000\u0000\u0080"+
 		"\u0081\u0005}\u0000\u0000\u0081\u0012\u0001\u0000\u0000\u0000\u0082\u0083"+
-		"\u0005,\u0000\u0000\u0083\u0014\u0001\u0000\u0000\u0000\u0084\u0085\u0005"+
-		";\u0000\u0000\u0085\u0016\u0001\u0000\u0000\u0000\u0086\u0087\u0005s\u0000"+
+		"\u0005;\u0000\u0000\u0083\u0014\u0001\u0000\u0000\u0000\u0084\u0085\u0005"+
+		",\u0000\u0000\u0085\u0016\u0001\u0000\u0000\u0000\u0086\u0087\u0005s\u0000"+
 		"\u0000\u0087\u0088\u0005t\u0000\u0000\u0088\u0089\u0005r\u0000\u0000\u0089"+
 		"\u008a\u0005u\u0000\u0000\u008a\u008b\u0005c\u0000\u0000\u008b\u008c\u0005"+
 		"t\u0000\u0000\u008c\u0018\u0001\u0000\u0000\u0000\u008d\u008e\u0005[\u0000"+

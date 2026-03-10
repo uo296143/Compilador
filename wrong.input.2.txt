@@ -1,7 +1,12 @@
 tuple: struct { 
-	key:int;	
+	key, key, g:int;
 	value:int;	
 	key:double; # Error: duplicated field
+};
+
+tuplsdrfge: struct {
+	key, g:int;
+	value:int;
 };
 
 # Main program

@@ -1,4 +1,4 @@
-// Generated from C:/Users/uo296143/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.*;
@@ -7,6 +7,7 @@ package parser;
     import ast.type.*;
     import ast.statement.expression.*;
     import ast.statement.expression.constants.*;
+    import errorhandler.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -61,13 +62,25 @@ public class PmmBaseListener implements PmmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariableDefinition(PmmParser.VariableDefinitionContext ctx) { }
+	@Override public void enterVariableDefinitions(PmmParser.VariableDefinitionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariableDefinition(PmmParser.VariableDefinitionContext ctx) { }
+	@Override public void exitVariableDefinitions(PmmParser.VariableDefinitionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVarDefinition(PmmParser.VarDefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarDefinition(PmmParser.VarDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

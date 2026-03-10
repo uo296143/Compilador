@@ -1,4 +1,4 @@
-// Generated from C:/Users/uo296143/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.*;
@@ -7,6 +7,7 @@ package parser;
     import ast.type.*;
     import ast.statement.expression.*;
     import ast.statement.expression.constants.*;
+    import errorhandler.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -46,15 +47,25 @@ public interface PmmListener extends ParseTreeListener {
 	 */
 	void exitDefinition(PmmParser.DefinitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PmmParser#variableDefinition}.
+	 * Enter a parse tree produced by {@link PmmParser#variableDefinitions}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableDefinition(PmmParser.VariableDefinitionContext ctx);
+	void enterVariableDefinitions(PmmParser.VariableDefinitionsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PmmParser#variableDefinition}.
+	 * Exit a parse tree produced by {@link PmmParser#variableDefinitions}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableDefinition(PmmParser.VariableDefinitionContext ctx);
+	void exitVariableDefinitions(PmmParser.VariableDefinitionsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmmParser#varDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarDefinition(PmmParser.VarDefinitionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmmParser#varDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarDefinition(PmmParser.VarDefinitionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PmmParser#functionDefinition}.
 	 * @param ctx the parse tree

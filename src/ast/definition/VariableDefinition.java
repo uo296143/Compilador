@@ -33,8 +33,23 @@ public class VariableDefinition implements Definition, Statement {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((VariableDefinition) obj).getName().equals(this.getName());
+    }
+
+    @Override
     public int getLine() {
         return line;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", ";
     }
 
     @Override
