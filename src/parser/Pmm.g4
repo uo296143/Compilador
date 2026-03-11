@@ -32,7 +32,7 @@ variableDefinitions returns [List<VariableDefinition> ast = new ArrayList<Variab
                            ( varDefinition COMA=';' {for(VariableDefinition variable : $varDefinition.ast)
                                                        {
                                                            if($ast.contains(variable)){
-                                                               ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + variable.getName(), new CharLiteral("'h'", $COMA.getLine(), $COMA.getCharPositionInLine() + 1)));
+                                                               ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + variable.getName(), new Variable("name", $COMA.getLine(), $COMA.getCharPositionInLine() + 1)));
                                                            }else{
                                                                $ast.add(variable);
                                                            }
@@ -45,7 +45,7 @@ varDefinition returns [List<VariableDefinition> ast = new ArrayList<VariableDefi
                       ID {$names.add($ID.text);}
                       ( ',' ID  {
                            if ($names.contains($ID.text)) {
-                                ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + $ID.text, new CharLiteral("'h'", $ID.getLine(), $ID.getCharPositionInLine() + 1)));
+                                ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + $ID.text, new Variable("name", $ID.getLine(), $ID.getCharPositionInLine() + 1)));
                            } else {
                                 {$names.add($ID.text);}
                            }
@@ -84,14 +84,14 @@ fields returns [List<Field> ast = new ArrayList<Field>()] locals [List<String> f
                ID1=ID { $fieldNames.add($ID1.text) ;} (',' ID2=ID
                      {
                          if ($fieldNames.contains($ID2.text)) {
-                            ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + $ID2.text, new CharLiteral("'h'", $ID2.getLine(), $ID2.getCharPositionInLine() + 1)));
+                            ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + $ID2.text, new Variable("name", $ID2.getLine(), $ID2.getCharPositionInLine() + 1)));
                          } else {
                             $fieldNames.add($ID2.text);
                          }
                      ;}
-                  )* ':' t1=type {for(String name : $fieldNames)
+                  )* DP=':' t1=type {for(String name : $fieldNames)
                                       {
-                                           $ast.add(new Field(name, $t1.ast));
+                                           $ast.add(new Field(name, $t1.ast, $DP.getLine(), $DP.getCharPositionInLine() + 1));
                                       }
                                    ;}
 

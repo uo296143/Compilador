@@ -1,0 +1,191 @@
+package semantic;
+
+import ast.Program;
+import ast.definition.FunctionDefinition;
+import ast.definition.VariableDefinition;
+import ast.statement.*;
+import ast.statement.expression.*;
+import ast.statement.expression.constants.CharLiteral;
+import ast.statement.expression.constants.DoubleLiteral;
+import ast.statement.expression.constants.IntLiteral;
+import ast.type.*;
+import visitor.Visitor;
+
+public class TypeCheckingVisitor implements Visitor<Void, Void> {
+
+    @Override
+    public Void visit(FunctionDefinition funcDef, Void o) {
+        funcDef.accept(this, o);
+        return null;
+    }
+
+    @Override
+    public Void visit(VariableDefinition varDef, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(CharLiteral charLit, Void o) {
+        charLit.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(DoubleLiteral doubleLit, Void o) {
+        doubleLit.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(IntLiteral intLit, Void o) {
+        intLit.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(ArithmeticOperator arithOp, Void o) {
+        arithOp.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(ArrayAccess arrayAccess, Void o) {
+        arrayAccess.setLvalue(true);
+        return null;
+    }
+
+    @Override
+    public Void visit(Cast cast, Void o) {
+        cast.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(ComparativeOperator compOp, Void o) {
+        compOp.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(LogicalOperator logicOp, Void o) {
+        logicOp.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(NotArithmetic notArith, Void o) {
+        notArith.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(NotLogic notLogic, Void o) {
+        notLogic.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(Point point, Void o) {
+        point.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(Variable variable, Void o) {
+        variable.setLvalue(true);
+        return null;
+    }
+
+    @Override
+    public Void visit(Assignment assignment, Void o) {
+        if(assignment.getLeftExpression().getLvalue()) {
+            assignment.getLeftExpression().accept(this, o);
+            assignment.getLeftExpression().accept(this, o);
+        }
+        return null;
+    }
+
+    @Override
+    public Void visit(FunctionInvocation funcInvoc, Void o) {
+        funcInvoc.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Void visit(IfElse ifElse, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(Input input, Void o) {
+        if(input.getExpressions().getLvalue()) {
+            input.getExpressions().accept(this, o);
+        }
+        return null;
+    }
+
+    @Override
+    public Void visit(Print print, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(Return ret, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(While whileStatement, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(ArrayType arrayType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(CharType charType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(DoubleType doubleType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(ErrorType errorType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(Field field, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(FunctionType functionType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(IntType intType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(None none, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(StructType structType, Void o) {
+        return null;
+    }
+
+    @Override
+    public Void visit(Program program, Void o) {
+        return null;
+    }
+}

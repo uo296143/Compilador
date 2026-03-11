@@ -1,12 +1,14 @@
 package ast.statement.expression;
 
 import ast.type.Type;
+import visitor.Visitor;
 
 public class Variable implements Expression{
 
     private String name;
     private int line;
     private int column;
+    private boolean lvalue;
 
     public Variable(String name) {
         this.name = name;
@@ -32,4 +34,18 @@ public class Variable implements Expression{
         return column;
     }
 
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return visitor.visit(this, parameter);
+    }
+
+    @Override
+    public boolean getLvalue() {
+        return lvalue;
+    }
+
+    @Override
+    public void setLvalue(boolean lvalue) {
+        this.lvalue = lvalue;
+    }
 }

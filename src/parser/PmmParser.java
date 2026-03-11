@@ -1,4 +1,4 @@
-// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/uo296143/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.*;
@@ -845,6 +845,7 @@ public class PmmParser extends Parser {
 		public List<String> fieldNames = new ArrayList<String>();
 		public Token ID1;
 		public Token ID2;
+		public Token DP;
 		public TypeContext t1;
 		public List<TerminalNode> ID() { return getTokens(PmmParser.ID); }
 		public TerminalNode ID(int i) {
@@ -901,12 +902,12 @@ public class PmmParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(179);
-			match(T__6);
+			((FieldsContext)_localctx).DP = match(T__6);
 			setState(180);
 			((FieldsContext)_localctx).t1 = type();
 			for(String name : _localctx.fieldNames)
 			                                      {
-			                                           _localctx.ast.add(new Field(name, ((FieldsContext)_localctx).t1.ast));
+			                                           _localctx.ast.add(new Field(name, ((FieldsContext)_localctx).t1.ast, ((FieldsContext)_localctx).DP.getLine(), ((FieldsContext)_localctx).DP.getCharPositionInLine() + 1));
 			                                      }
 			                                   ;
 			}

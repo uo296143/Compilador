@@ -1,6 +1,7 @@
 package ast.statement;
 
 import ast.statement.expression.Expression;
+import visitor.Visitor;
 
 public class Assignment implements Statement{
 
@@ -23,5 +24,27 @@ public class Assignment implements Statement{
     @Override
     public int getColumn() {
         return column;
+    }
+
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public void setLeftExpression(Expression leftExpression) {
+        this.leftExpression = leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
+
+    public void setRightExpression(Expression rightExpression) {
+        this.rightExpression = rightExpression;
+    }
+
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return visitor.visit(this, parameter);
     }
 }

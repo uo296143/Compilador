@@ -1,6 +1,7 @@
 package ast.statement;
 
 import ast.statement.expression.Expression;
+import visitor.Visitor;
 
 import java.util.List;
 
@@ -27,5 +28,10 @@ public class Print implements Statement{
     @Override
     public int getColumn() {
         return column;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return visitor.visit(this, parameter);
     }
 }

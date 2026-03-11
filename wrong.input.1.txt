@@ -1,12 +1,6 @@
-i, i, i, i: int; # Error: duplicated variable
+# Lvalue required
 
-a: int;
-a: int;
-b: int;
-
-# Main program
 def main() -> None: {
-    a: int;
-    a: int;
-	i = 0;
+	i:int;
+	(i+2) = 3;
 }

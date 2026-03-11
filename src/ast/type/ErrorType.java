@@ -1,8 +1,9 @@
 package ast.type;
 
 import ast.Locatable;
+import visitor.Visitor;
 
-public class ErrorType {
+public class ErrorType implements Type{
 
     private String message;
     private Locatable locatable;
@@ -15,6 +16,11 @@ public class ErrorType {
     @Override
     public String toString(){
         return message + ". En la línea: " + locatable.getLine() + " y Columna: " + locatable.getColumn();
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return visitor.visit(this, parameter);
     }
 
 }

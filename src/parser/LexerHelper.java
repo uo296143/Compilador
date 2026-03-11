@@ -12,9 +12,16 @@ public class LexerHelper {
 		return -1;
 	}
 
+	/**
+	 * 'a' -> a
+	 * '\123' -> el caracter ascii 123
+	 * '\\t' -> return \t
+	 * @param str
+	 * @return
+	 */
 	public static char lexemeToChar(String str) {
 		try {
-			return str.charAt(1);
+
 		}
 		catch(NumberFormatException e) {
 			System.out.println(e);

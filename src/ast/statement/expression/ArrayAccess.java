@@ -1,9 +1,12 @@
 package ast.statement.expression;
 
+import visitor.Visitor;
+
 public class ArrayAccess implements Expression{
 
     private Expression leftExpression, rightExpression;
     private int line, column;
+    private boolean lvalue;
 
     public ArrayAccess(Expression leftExpression, Expression rightExpression){
         this.leftExpression = leftExpression;
@@ -24,5 +27,20 @@ public class ArrayAccess implements Expression{
     @Override
     public int getColumn() {
         return column;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return visitor.visit(this, parameter);
+    }
+
+    @Override
+    public boolean getLvalue() {
+        return lvalue;
+    }
+
+    @Override
+    public void setLvalue(boolean lvalue) {
+        this.lvalue = lvalue;
     }
 }

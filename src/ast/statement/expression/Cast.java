@@ -2,12 +2,14 @@ package ast.statement.expression;
 
 import ast.statement.Assignment;
 import ast.type.Type;
+import visitor.Visitor;
 
 public class Cast implements Expression {
 
     private Expression expression;
     private Type castType;
     private int line, column;
+    private boolean lvalue;
 
     public Cast(Expression expression,Type castType, int line, int column) {
         this.expression = expression;
@@ -29,5 +31,20 @@ public class Cast implements Expression {
     @Override
     public int getColumn() {
         return column;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return visitor.visit(this, parameter);
+    }
+
+    @Override
+    public boolean getLvalue() {
+        return lvalue;
+    }
+
+    @Override
+    public void setLvalue(boolean lvalue) {
+        this.lvalue = lvalue;
     }
 }
