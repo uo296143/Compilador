@@ -30,6 +30,14 @@ public class Print implements Statement{
         return column;
     }
 
+    public List<Expression> getExpressions() {
+        return expressions;
+    }
+
+    public void setExpressions(List<Expression> expressions) {
+        this.expressions = expressions;
+    }
+
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);

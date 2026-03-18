@@ -48,4 +48,12 @@ public class LogicalOperator implements Expression {
     public void setLvalue(boolean lvalue) {
         this.lvalue = lvalue;
     }
+
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
 }

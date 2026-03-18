@@ -34,4 +34,16 @@ public class IfElse implements Statement{
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
     }
+
+    public List<Statement> getIfBody() {
+        return ifBody;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
+
+    public List<Statement> getElseBody() {
+        return elseBody;
+    }
 }

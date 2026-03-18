@@ -18,4 +18,7 @@ public class Program implements ASTNode{
         return visitor.visit(this, parameter);
     }
 
+    public List<Definition> getDefinitions() {
+        return definitions;
+    }
 }

@@ -20,4 +20,7 @@ public class FunctionType implements Type{
         return visitor.visit(this, parameter);
     }
 
+    public List<Statement> getStatements() {
+        return statements;
+    }
 }

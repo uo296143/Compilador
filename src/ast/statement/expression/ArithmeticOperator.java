@@ -44,6 +44,14 @@ public class ArithmeticOperator implements Expression {
         this.lvalue = lvalue;
     }
 
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
+
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);

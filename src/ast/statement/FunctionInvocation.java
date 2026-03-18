@@ -49,4 +49,8 @@ public class FunctionInvocation implements Statement, Expression {
     public void setLvalue(boolean lvalue) {
         this.lvalue = lvalue;
     }
+
+    public List<Expression> getArguments() {
+        return arguments;
+    }
 }

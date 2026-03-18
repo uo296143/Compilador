@@ -45,4 +45,8 @@ public class Point implements Expression{
     public void setLvalue(boolean lvalue) {
         this.lvalue = lvalue;
     }
+
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
 }

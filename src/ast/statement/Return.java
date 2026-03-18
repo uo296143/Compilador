@@ -28,4 +28,8 @@ public class Return implements Statement {
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
     }
+
+    public Expression getReturnExpression() {
+        return returnExpression;
+    }
 }

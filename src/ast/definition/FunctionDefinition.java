@@ -36,6 +36,10 @@ public class FunctionDefinition implements Definition {
         return line;
     }
 
+    public List<Statement> getStatements() {
+        return statements;
+    }
+
     @Override
     public int getColumn() {
         return column;

@@ -1,6 +1,7 @@
 package semantic;
 
 import ast.Program;
+import ast.definition.Definition;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.statement.*;
@@ -9,18 +10,33 @@ import ast.statement.expression.constants.CharLiteral;
 import ast.statement.expression.constants.DoubleLiteral;
 import ast.statement.expression.constants.IntLiteral;
 import ast.type.*;
+import errorhandler.ErrorHandler;
 import visitor.Visitor;
+
+import java.util.ArrayList;
 
 public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
+    public Void visit(Program program, Void o) {
+        for(Definition definition : program.getDefinitions()){
+            definition.accept(this, o);
+        }
+        return null;
+    }
+
+    @Override
     public Void visit(FunctionDefinition funcDef, Void o) {
-        funcDef.accept(this, o);
+        for(Statement statement : funcDef.getStatements()){
+            statement.accept(this, o);
+        }
         return null;
     }
 
     @Override
     public Void visit(VariableDefinition varDef, Void o) {
+        // ¿ESTÁ BIEN?
+        varDef.getType().accept(this, o);
         return null;
     }
 
@@ -44,49 +60,61 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(ArithmeticOperator arithOp, Void o) {
+        arithOp.getLeftExpression().accept(this, o);
+        arithOp.getRightExpression().accept(this, o);
         arithOp.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(ArrayAccess arrayAccess, Void o) {
+        arrayAccess.getLeftExpression().accept(this, o);
+        arrayAccess.getRightExpression().accept(this, o);
         arrayAccess.setLvalue(true);
         return null;
     }
 
     @Override
     public Void visit(Cast cast, Void o) {
+        cast.getExpression().accept(this, o);
         cast.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(ComparativeOperator compOp, Void o) {
+        compOp.getLeftExpression().accept(this, o);
+        compOp.getRightExpression().accept(this, o);
         compOp.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(LogicalOperator logicOp, Void o) {
+        logicOp.getLeftExpression().accept(this, o);
+        logicOp.getRightExpression().accept(this, o);
         logicOp.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(NotArithmetic notArith, Void o) {
+        notArith.getExpression().accept(this, o);
         notArith.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(NotLogic notLogic, Void o) {
+        notLogic.getExpression().accept(this, o);
         notLogic.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(Point point, Void o) {
-        point.setLvalue(false);
+        point.getLeftExpression().accept(this, o);
+        point.setLvalue(true);
         return null;
     }
 
@@ -98,44 +126,81 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(Assignment assignment, Void o) {
-        if(assignment.getLeftExpression().getLvalue()) {
-            assignment.getLeftExpression().accept(this, o);
-            assignment.getLeftExpression().accept(this, o);
+
+        assignment.getLeftExpression().accept(this, o);
+        assignment.getRightExpression().accept(this, o);
+
+        if (!assignment.getLeftExpression().getLvalue()) {
+            ErrorHandler.getInstance().addError(
+                    new ErrorType("El lado izquierdo de la asignación no es un Lvalue: "
+                        , new Assignment(assignment.getLeftExpression(),  assignment.getRightExpression(),
+                            assignment.getLeftExpression().getLine(), assignment.getLeftExpression().getColumn())));
+
         }
         return null;
     }
 
+
+
     @Override
     public Void visit(FunctionInvocation funcInvoc, Void o) {
+        for(Expression expression : funcInvoc.getArguments()){
+            expression.accept(this, o);
+        }
         funcInvoc.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(IfElse ifElse, Void o) {
+        ifElse.getExpression().accept(this, o);
+        for(Statement statement : ifElse.getIfBody()){
+            statement.accept(this, o);
+        }
+        for(Statement statement : ifElse.getElseBody()){
+            statement.accept(this, o);
+        }
         return null;
     }
 
     @Override
     public Void visit(Input input, Void o) {
-        if(input.getExpressions().getLvalue()) {
-            input.getExpressions().accept(this, o);
+        for(Expression e: input.getExpressions()) {
+            e.accept(this, o);
+        }
+        for(Expression e : input.getExpressions()){
+            if(!e.getLvalue()){
+                ErrorHandler.getInstance().addError(
+                        new ErrorType("Alguna de los inputs no es un Lvalue: "
+                                , new Input(new ArrayList<Expression>(),
+                                e.getLine(), e.getColumn())));
+
+
+            }
         }
         return null;
     }
 
     @Override
     public Void visit(Print print, Void o) {
+        for(Expression expression : print.getExpressions()){
+            expression.accept(this, o);
+        }
         return null;
     }
 
     @Override
     public Void visit(Return ret, Void o) {
+        ret.getReturnExpression().accept(this, o);
         return null;
     }
 
     @Override
     public Void visit(While whileStatement, Void o) {
+        whileStatement.getExpression().accept(this, o);
+        for(Statement statement : whileStatement.getStatements()){
+            statement.accept(this, o);
+        }
         return null;
     }
 
@@ -166,6 +231,9 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(FunctionType functionType, Void o) {
+        for(Statement statement : functionType.getStatements()){
+            statement.accept(this, o);
+        }
         return null;
     }
 
@@ -184,8 +252,4 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(Program program, Void o) {
-        return null;
-    }
 }

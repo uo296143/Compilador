@@ -47,4 +47,8 @@ public class Cast implements Expression {
     public void setLvalue(boolean lvalue) {
         this.lvalue = lvalue;
     }
+
+    public Expression getExpression() {
+        return expression;
+    }
 }

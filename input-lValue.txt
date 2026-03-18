@@ -1,0 +1,15 @@
+def f(e:int)-> double: {
+  return e;
+}
+
+# Main program
+def main() -> None: {
+  i,a,j:int;
+  v:[10]double;
+  
+  a = 0;
+  i = 0;
+  j = -i*a-2;  
+  v[(int)(v[j])] = a;
+  print 'f', '(', 'i', ')', '=' ,f(i);
+}

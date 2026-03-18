@@ -100,7 +100,14 @@ fields returns [List<Field> ast = new ArrayList<Field>()] locals [List<String> f
 statement returns [Statement ast] locals [List<Expression> exp = new ArrayList<Expression>(), List<Statement> elseBody = new ArrayList<Statement>()]:
                    PRINT='print' expressions? ';' {$ast = new Print($expressions.ast, $PRINT.getLine(), $PRINT.getCharPositionInLine()+1);}
                   | INPUT='input' expressions? ';' {$ast = new Input($expressions.ast, $INPUT.getLine(), $INPUT.getCharPositionInLine()+1);}
-                  | ex1=expression '=' ex2=expression ';' {$ast = new Assignment($ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
+                  | ex1=expression '=' ex2=expression ';' { if(ex1.getLvalue()==false)
+                                                            {
+                                                                ErrorHandler.getInstance().addError(new ErrorType("El lado izquierdo de la asignación no es un Lvalue: " + $ex1.text, new Assignment(ex1, ex2, $ex1.getLine(), $ex2.getColumn())));
+                                                            }else{
+                                                                $ast = new Assignment($ex1.ast, $ex2.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());
+                                                            }
+                                                          ;}
+
                   | 'if' ex1=expression ':' b1=block ( 'else' ':' b2=block {$elseBody = $b2.ast;} )? {$ast = new IfElse($b1.ast, $ex1.ast, $elseBody, $ex1.ast.getLine(), $ex1.ast.getColumn());}
                   | 'while' ex1=expression ':' b1=block {$ast = new While($b1.ast, $ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}
                   | 'return' ex1=expression ';' {$ast = new Return($ex1.ast, $ex1.ast.getLine(), $ex1.ast.getColumn());}

@@ -31,4 +31,12 @@ public class While implements Statement{
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
     }
+
+    public List<Statement> getStatements() {
+        return statements;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
 }
