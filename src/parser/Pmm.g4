@@ -32,7 +32,7 @@ variableDefinitions returns [List<VariableDefinition> ast = new ArrayList<Variab
                            ( varDefinition COMA=';' {for(VariableDefinition variable : $varDefinition.ast)
                                                        {
                                                            if($ast.contains(variable)){
-                                                               ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + variable.getName(), new Variable("name", $COMA.getLine(), $COMA.getCharPositionInLine() + 1)));
+                                                               new ErrorType("Variable repetida: ", new Variable(variable.getName(), $COMA.getLine(), $COMA.getCharPositionInLine() + 1));
                                                            }else{
                                                                $ast.add(variable);
                                                            }
@@ -45,7 +45,7 @@ varDefinition returns [List<VariableDefinition> ast = new ArrayList<VariableDefi
                       ID {$names.add($ID.text);}
                       ( ',' ID  {
                            if ($names.contains($ID.text)) {
-                                ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + $ID.text, new Variable("name", $ID.getLine(), $ID.getCharPositionInLine() + 1)));
+                                new ErrorType("Variable repetida: ", new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1));
                            } else {
                                 {$names.add($ID.text);}
                            }

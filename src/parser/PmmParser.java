@@ -1,4 +1,4 @@
-// Generated from C:/Users/uo296143/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.*;
@@ -395,7 +395,7 @@ public class PmmParser extends Parser {
 					for(VariableDefinition variable : ((VariableDefinitionsContext)_localctx).varDefinition.ast)
 					                                                       {
 					                                                           if(_localctx.ast.contains(variable)){
-					                                                               ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + variable.getName(), new Variable("name", ((VariableDefinitionsContext)_localctx).COMA.getLine(), ((VariableDefinitionsContext)_localctx).COMA.getCharPositionInLine() + 1)));
+					                                                               new ErrorType("Variable repetida: ", new Variable(variable.getName(), ((VariableDefinitionsContext)_localctx).COMA.getLine(), ((VariableDefinitionsContext)_localctx).COMA.getCharPositionInLine() + 1));
 					                                                           }else{
 					                                                               _localctx.ast.add(variable);
 					                                                           }
@@ -473,7 +473,7 @@ public class PmmParser extends Parser {
 				((VarDefinitionContext)_localctx).ID = match(ID);
 
 				                           if (_localctx.names.contains((((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null))) {
-				                                ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + (((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null), new Variable("name", ((VarDefinitionContext)_localctx).ID.getLine(), ((VarDefinitionContext)_localctx).ID.getCharPositionInLine() + 1)));
+				                                new ErrorType("Variable repetida: ", new Variable((((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null), ((VarDefinitionContext)_localctx).ID.getLine(), ((VarDefinitionContext)_localctx).ID.getCharPositionInLine() + 1));
 				                           } else {
 				                                {_localctx.names.add((((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null));}
 				                           }

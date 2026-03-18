@@ -55,4 +55,9 @@ public class Variable implements Expression{
         return definition;
     }
 
+    @Override
+    public String toString(){
+        return name;
+    }
+
 }

@@ -53,4 +53,13 @@ public class FunctionInvocation implements Statement, Expression {
     public List<Expression> getArguments() {
         return arguments;
     }
+
+    public Variable getFunction() {
+        return function;
+    }
+
+    @Override
+    public String toString(){
+        return function.getName();
+    }
 }

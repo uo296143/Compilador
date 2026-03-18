@@ -12,6 +12,7 @@ public class FunctionDefinition implements Definition {
     private String name;
     private Type type;
     private int line, column;
+    private int scope;
 
     public FunctionDefinition(List<Statement> statements, String name, Type type, int line, int column) {
         this.statements = statements;
@@ -33,12 +34,12 @@ public class FunctionDefinition implements Definition {
 
     @Override
     public int getScope() {
-        return 0;
+        return scope;
     }
 
     @Override
     public void setScope(int scope) {
-
+        this.scope = scope;
     }
 
     @Override
@@ -58,5 +59,10 @@ public class FunctionDefinition implements Definition {
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 }

@@ -17,7 +17,7 @@ public class ErrorType implements Type{
 
     @Override
     public String toString(){
-        return message + ". En la línea: " + locatable.getLine() + " y Columna: " + locatable.getColumn();
+        return message + " ("+ locatable.toString() +") . En la línea: " + locatable.getLine() + " y Columna: " + locatable.getColumn();
     }
 
     @Override

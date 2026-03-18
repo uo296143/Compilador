@@ -11,6 +11,7 @@ public class VariableDefinition implements Definition, Statement {
     private Type type;
     private String name;
     private int line, column;
+    private int scope;
 
     public VariableDefinition(Type type, String name) {
         this.type = type;
@@ -35,12 +36,12 @@ public class VariableDefinition implements Definition, Statement {
 
     @Override
     public int getScope() {
-        return 0;
+        return scope;
     }
 
     @Override
     public void setScope(int scope) {
-
+        this.scope = scope;
     }
 
     @Override
@@ -60,7 +61,7 @@ public class VariableDefinition implements Definition, Statement {
 
     @Override
     public String toString() {
-        return name + ", ";
+        return name;
     }
 
     @Override
