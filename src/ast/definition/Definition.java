@@ -7,5 +7,7 @@ public interface Definition extends Locatable {
 
     public Type getType();
     public String getName();
+    public int getScope();
+    public void setScope(int scope);
 
 }

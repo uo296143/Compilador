@@ -15,113 +15,122 @@ import visitor.Visitor;
 
 import java.util.ArrayList;
 
-public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
+public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
     @Override
-    public Void visit(CharLiteral charLit, Void o) {
+    public TR visit(Program program, TP o) {
+        for(Definition definition : program.getDefinitions()){
+            definition.accept(this, o);
+        }
+        return null;
+    }
+
+    @Override
+    public TR visit(FunctionDefinition funcDef, TP o) {
+        for(Statement statement : funcDef.getStatements()){
+            statement.accept(this, o);
+        }
+        return null;
+    }
+
+    @Override
+    public TR visit(VariableDefinition varDef, TP o) {
+        varDef.getType().accept(this, o);
+        return null;
+    }
+
+    @Override
+    public TR visit(CharLiteral charLit, TP o) {
         charLit.setLvalue(false);
         return null;
     }
 
     @Override
-    public Void visit(DoubleLiteral doubleLit, Void o) {
+    public TR visit(DoubleLiteral doubleLit, TP o) {
         doubleLit.setLvalue(false);
         return null;
     }
 
     @Override
-    public Void visit(IntLiteral intLit, Void o) {
+    public TR visit(IntLiteral intLit, TP o) {
         intLit.setLvalue(false);
         return null;
     }
 
     @Override
-    public Void visit(ArithmeticOperator arithOp, Void o) {
-        super.visit(arithOp, o);
-        arithOp.setLvalue(false);
+    public TR visit(ArithmeticOperator arithOp, TP o) {
+        arithOp.getLeftExpression().accept(this, o);
+        arithOp.getRightExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(ArrayAccess arrayAccess, Void o) {
-        super.visit(arrayAccess, o);
-        arrayAccess.setLvalue(true);
+    public TR visit(ArrayAccess arrayAccess, TP o) {
+        arrayAccess.getLeftExpression().accept(this, o);
+        arrayAccess.getRightExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(Cast cast, Void o) {
-        super.visit(cast, o);
-        cast.setLvalue(false);
+    public TR visit(Cast cast, TP o) {
+        cast.getExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(ComparativeOperator compOp, Void o) {
-        super.visit(compOp, o);
-        compOp.setLvalue(false);
+    public TR visit(ComparativeOperator compOp, TP o) {
+        compOp.getLeftExpression().accept(this, o);
+        compOp.getRightExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(LogicalOperator logicOp, Void o) {
-        super.visit(logicOp, o);
-        logicOp.setLvalue(false);
+    public TR visit(LogicalOperator logicOp, TP o) {
+        logicOp.getLeftExpression().accept(this, o);
+        logicOp.getRightExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(NotArithmetic notArith, Void o) {
-        super.visit(notArith, o);
-        notArith.setLvalue(false);
+    public TR visit(NotArithmetic notArith, TP o) {
+        notArith.getExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(NotLogic notLogic, Void o) {
+    public TR visit(NotLogic notLogic, TP o) {
         notLogic.getExpression().accept(this, o);
-        notLogic.setLvalue(false);
         return null;
     }
 
     @Override
-    public Void visit(Point point, Void o) {
+    public TR visit(Point point, TP o) {
         point.getLeftExpression().accept(this, o);
-        point.setLvalue(true);
         return null;
     }
 
     @Override
-    public Void visit(Variable variable, Void o) {
-        variable.setLvalue(true);
+    public TR visit(Variable variable, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(Assignment assignment, Void o) {
-
+    public TR visit(Assignment assignment, TP o) {
         assignment.getLeftExpression().accept(this, o);
         assignment.getRightExpression().accept(this, o);
-
-        if (!assignment.getLeftExpression().getLvalue()) {
-            new ErrorType("El lado izquierdo de la asignación no es un Lvalue: "
-                , new Assignment(assignment.getLeftExpression(),  assignment.getRightExpression(),
-                assignment.getLeftExpression().getLine(), assignment.getLeftExpression().getColumn()));
-        }
         return null;
     }
 
     @Override
-    public Void visit(FunctionInvocation funcInvoc, Void o) {
+    public TR visit(FunctionInvocation funcInvoc, TP o) {
         for(Expression expression : funcInvoc.getArguments()){
             expression.accept(this, o);
         }
-        funcInvoc.setLvalue(false);
         return null;
     }
 
     @Override
-    public Void visit(IfElse ifElse, Void o) {
+    public TR visit(IfElse ifElse, TP o) {
         ifElse.getExpression().accept(this, o);
         for(Statement statement : ifElse.getIfBody()){
             statement.accept(this, o);
@@ -133,22 +142,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     }
 
     @Override
-    public Void visit(Input input, Void o) {
+    public TR visit(Input input, TP o) {
         for(Expression e: input.getExpressions()) {
             e.accept(this, o);
-        }
-        for(Expression e : input.getExpressions()){
-            if(!e.getLvalue()){
-                new ErrorType("Alguna de los inputs no es un Lvalue: "
-                    , new Input(new ArrayList<Expression>(),
-                    e.getLine(), e.getColumn()));
-            }
         }
         return null;
     }
 
     @Override
-    public Void visit(Print print, Void o) {
+    public TR visit(Print print, TP o) {
         for(Expression expression : print.getExpressions()){
             expression.accept(this, o);
         }
@@ -156,13 +158,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     }
 
     @Override
-    public Void visit(Return ret, Void o) {
+    public TR visit(Return ret, TP o) {
         ret.getReturnExpression().accept(this, o);
         return null;
     }
 
     @Override
-    public Void visit(While whileStatement, Void o) {
+    public TR visit(While whileStatement, TP o) {
         whileStatement.getExpression().accept(this, o);
         for(Statement statement : whileStatement.getStatements()){
             statement.accept(this, o);
@@ -171,32 +173,32 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     }
 
     @Override
-    public Void visit(ArrayType arrayType, Void o) {
+    public TR visit(ArrayType arrayType, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(CharType charType, Void o) {
+    public TR visit(CharType charType, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(DoubleType doubleType, Void o) {
+    public TR visit(DoubleType doubleType, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(ErrorType errorType, Void o) {
+    public TR visit(ErrorType errorType, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(Field field, Void o) {
+    public TR visit(Field field, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(FunctionType functionType, Void o) {
+    public TR visit(FunctionType functionType, TP o) {
         for(Statement statement : functionType.getStatements()){
             statement.accept(this, o);
         }
@@ -204,18 +206,17 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     }
 
     @Override
-    public Void visit(IntType intType, Void o) {
+    public TR visit(IntType intType, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(None none, Void o) {
+    public TR visit(None none, TP o) {
         return null;
     }
 
     @Override
-    public Void visit(StructType structType, Void o) {
+    public TR visit(StructType structType, TP o) {
         return null;
     }
-
 }

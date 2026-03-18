@@ -32,6 +32,16 @@ public class FunctionDefinition implements Definition {
     }
 
     @Override
+    public int getScope() {
+        return 0;
+    }
+
+    @Override
+    public void setScope(int scope) {
+
+    }
+
+    @Override
     public int getLine() {
         return line;
     }

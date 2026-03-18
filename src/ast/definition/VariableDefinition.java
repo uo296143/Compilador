@@ -34,6 +34,16 @@ public class VariableDefinition implements Definition, Statement {
     }
 
     @Override
+    public int getScope() {
+        return 0;
+    }
+
+    @Override
+    public void setScope(int scope) {
+
+    }
+
+    @Override
     public int hashCode() {
         return super.hashCode();
     }

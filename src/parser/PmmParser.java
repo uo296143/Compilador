@@ -395,7 +395,7 @@ public class PmmParser extends Parser {
 					for(VariableDefinition variable : ((VariableDefinitionsContext)_localctx).varDefinition.ast)
 					                                                       {
 					                                                           if(_localctx.ast.contains(variable)){
-					                                                               ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + variable.getName(), new CharLiteral("'h'", ((VariableDefinitionsContext)_localctx).COMA.getLine(), ((VariableDefinitionsContext)_localctx).COMA.getCharPositionInLine() + 1)));
+					                                                               ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + variable.getName(), new Variable("name", ((VariableDefinitionsContext)_localctx).COMA.getLine(), ((VariableDefinitionsContext)_localctx).COMA.getCharPositionInLine() + 1)));
 					                                                           }else{
 					                                                               _localctx.ast.add(variable);
 					                                                           }
@@ -473,7 +473,7 @@ public class PmmParser extends Parser {
 				((VarDefinitionContext)_localctx).ID = match(ID);
 
 				                           if (_localctx.names.contains((((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null))) {
-				                                ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + (((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null), new CharLiteral("'h'", ((VarDefinitionContext)_localctx).ID.getLine(), ((VarDefinitionContext)_localctx).ID.getCharPositionInLine() + 1)));
+				                                ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + (((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null), new Variable("name", ((VarDefinitionContext)_localctx).ID.getLine(), ((VarDefinitionContext)_localctx).ID.getCharPositionInLine() + 1)));
 				                           } else {
 				                                {_localctx.names.add((((VarDefinitionContext)_localctx).ID!=null?((VarDefinitionContext)_localctx).ID.getText():null));}
 				                           }
@@ -794,7 +794,7 @@ public class PmmParser extends Parser {
 					 for(Field field : ((TypeContext)_localctx).fields.ast)
 					                                                   {
 					                                                       if(_localctx.sFields.contains(field))
-					                                                           ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + field.getName(), new CharLiteral("'h'", ((TypeContext)_localctx).COMA.getLine(), ((TypeContext)_localctx).COMA.getCharPositionInLine() + 1)));
+					                                                           new ErrorType("Variable repetida: " + field.getName(), new CharLiteral("'h'", ((TypeContext)_localctx).COMA.getLine(), ((TypeContext)_localctx).COMA.getCharPositionInLine() + 1));
 					                                                       else
 					                                                           _localctx.sFields.add(field);
 					                                                   }
@@ -890,7 +890,7 @@ public class PmmParser extends Parser {
 				((FieldsContext)_localctx).ID2 = match(ID);
 
 				                         if (_localctx.fieldNames.contains((((FieldsContext)_localctx).ID2!=null?((FieldsContext)_localctx).ID2.getText():null))) {
-				                            ErrorHandler.getInstance().addError(new ErrorType("Variable repetida: " + (((FieldsContext)_localctx).ID2!=null?((FieldsContext)_localctx).ID2.getText():null), new CharLiteral("'h'", ((FieldsContext)_localctx).ID2.getLine(), ((FieldsContext)_localctx).ID2.getCharPositionInLine() + 1)));
+				                            new ErrorType("Variable repetida: " + (((FieldsContext)_localctx).ID2!=null?((FieldsContext)_localctx).ID2.getText():null), new Variable("name", ((FieldsContext)_localctx).ID2.getLine(), ((FieldsContext)_localctx).ID2.getCharPositionInLine() + 1));
 				                         } else {
 				                            _localctx.fieldNames.add((((FieldsContext)_localctx).ID2!=null?((FieldsContext)_localctx).ID2.getText():null));
 				                         }

@@ -1,5 +1,6 @@
 package ast.statement.expression;
 
+import ast.definition.Definition;
 import ast.type.Type;
 import visitor.Visitor;
 
@@ -9,6 +10,7 @@ public class Variable implements Expression{
     private int line;
     private int column;
     private boolean lvalue;
+    private Definition definition;
 
     public Variable(String name) {
         this.name = name;
@@ -48,4 +50,9 @@ public class Variable implements Expression{
     public void setLvalue(boolean lvalue) {
         this.lvalue = lvalue;
     }
+
+    public Definition getDefinition() {
+        return definition;
+    }
+
 }

@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Locatable;
+import errorhandler.ErrorHandler;
 import visitor.Visitor;
 
 public class ErrorType implements Type{
@@ -11,6 +12,7 @@ public class ErrorType implements Type{
     public ErrorType(String message, Locatable locatable){
         this.message = message;
         this.locatable = locatable;
+        ErrorHandler.getInstance().addError(this);
     }
 
     @Override
