@@ -2,7 +2,7 @@ package ast.statement.expression;
 
 import visitor.Visitor;
 
-public class NotArithmetic implements Expression{
+public class NotArithmetic extends AbstractExpression{
 
     private Expression expression;
     private int line, column;

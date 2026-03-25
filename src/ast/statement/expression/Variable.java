@@ -4,7 +4,7 @@ import ast.definition.Definition;
 import ast.type.Type;
 import visitor.Visitor;
 
-public class Variable implements Expression{
+public class Variable extends AbstractExpression{
 
     private String name;
     private int line;

@@ -3,7 +3,7 @@ package ast.statement.expression;
 
 import visitor.Visitor;
 
-public class ComparativeOperator implements Expression {
+public class ComparativeOperator extends AbstractExpression {
 
     private Expression leftExpression;
     private Expression rightExpression;

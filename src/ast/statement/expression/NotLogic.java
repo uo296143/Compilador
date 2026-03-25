@@ -2,7 +2,7 @@ package ast.statement.expression;
 
 import visitor.Visitor;
 
-public class NotLogic implements Expression{
+public class NotLogic extends AbstractExpression{
 
     private Expression expression;
     private int line, column;

@@ -4,7 +4,7 @@ import ast.statement.Assignment;
 import ast.type.Type;
 import visitor.Visitor;
 
-public class Cast implements Expression {
+public class Cast extends AbstractExpression {
 
     private Expression expression;
     private Type castType;

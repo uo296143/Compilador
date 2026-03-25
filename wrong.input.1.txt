@@ -1,7 +1,13 @@
-# Lvalue required
+integer:int;
+character:char;
+real:double;
 
-def main() -> None: {
-	i:int;
-	(i+2) = 3;
-	a.b = 3;
+juan = 3;
+
+def main()->None: {
+  input integer; 
+  character = 8.5;	# Error 1
+  3 = integer;		# Error 2
+  input integer+2; 	# Error 3
 }
+

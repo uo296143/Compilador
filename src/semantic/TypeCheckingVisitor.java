@@ -37,6 +37,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(ArithmeticOperator arithOp, Void o) {
+        // setType(tipo de la izquira.arithmetic()
         super.visit(arithOp, o);
         arithOp.setLvalue(false);
         return null;

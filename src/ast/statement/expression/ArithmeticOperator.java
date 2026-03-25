@@ -2,7 +2,7 @@ package ast.statement.expression;
 
 import visitor.Visitor;
 
-public class ArithmeticOperator implements Expression {
+public class ArithmeticOperator extends AbstractExpression {
 
     private Expression leftExpression;
     private Expression rightExpression;

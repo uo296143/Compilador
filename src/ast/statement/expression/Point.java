@@ -2,7 +2,7 @@ package ast.statement.expression;
 
 import visitor.Visitor;
 
-public class Point implements Expression{
+public class Point extends AbstractExpression{
 
     private String fieldName;
     private Expression leftExpression;

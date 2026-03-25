@@ -36,10 +36,18 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
     @Override
     public Void visit(VariableDefinition varDef, Void o) {
         varDef.getType().accept(this, o);
-        System.out.println("NOmbre de la variable ->"+varDef.getName()+"  -> tipo - "+varDef.getType());
         if(!table.insert(varDef)){
             new ErrorType("Variable_e repetida: ", varDef);
         }
+        return null;
+    }
+
+    @Override
+    public Void visit(Variable var, Void o) {
+        if(table.find(var.getName()) == null){
+            var.setType(new ErrorType("Variable no definida: ", var));
+        }
+        var.setType(var.getDefinition().getType());
         return null;
     }
 

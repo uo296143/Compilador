@@ -1,6 +1,10 @@
-# Lvalue required
+date: struct  { 
+  day:int;
+  month:int;
+  day:double;		# Error 1
+};
 
-def main() -> None:{
-	i:int;	
-	input i;
+def main()->None: {
+  input date.year;	# Error 2
 }
+

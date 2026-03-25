@@ -2,7 +2,7 @@ package ast.statement.expression;
 
 import visitor.Visitor;
 
-public class ArrayAccess implements Expression{
+public class ArrayAccess extends AbstractExpression{
 
     private Expression leftExpression, rightExpression;
     private int line, column;
@@ -51,4 +51,5 @@ public class ArrayAccess implements Expression{
     public Expression getRightExpression() {
         return rightExpression;
     }
+
 }
