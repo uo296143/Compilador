@@ -49,4 +49,8 @@ public class Point extends AbstractExpression{
     public Expression getLeftExpression() {
         return leftExpression;
     }
+
+    public String getFieldName(){
+        return fieldName;
+    }
 }

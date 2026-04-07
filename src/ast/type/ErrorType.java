@@ -4,7 +4,7 @@ import ast.Locatable;
 import errorhandler.ErrorHandler;
 import visitor.Visitor;
 
-public class ErrorType implements Type{
+public class ErrorType extends AbstractType{
 
     private String message;
     private Locatable locatable;
@@ -23,6 +23,11 @@ public class ErrorType implements Type{
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
+    }
+
+    @Override
+    public String typeExpression() {
+        return super.typeExpression();
     }
 
 }

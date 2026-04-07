@@ -1,0 +1,9 @@
+IntType: type → INT
+RealType: type → DOUBLE
+CharType: type → CHAR
+ArrayType: type → type INT_CONSTANT
+StructType: type → field*
+Field: field → type ID
+FunctionType: type → type variabledefinition*
+VariableDefinition: variabledefinition → type ID
+Arithmetic: expression1 → expression2 (+|-|*|/) expression3

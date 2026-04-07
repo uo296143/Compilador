@@ -7,6 +7,7 @@ public class Field implements Locatable {
 
     private String name;
     private Type type;
+    private int offset;
     private int line, column;
 
     @Override

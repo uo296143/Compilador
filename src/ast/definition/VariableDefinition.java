@@ -10,6 +10,7 @@ public class VariableDefinition implements Definition, Statement {
 
     private Type type;
     private String name;
+    private int offset;
     private int line, column;
     private int scope;
 

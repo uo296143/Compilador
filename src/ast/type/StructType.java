@@ -4,7 +4,7 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class StructType implements Type{
+public class StructType extends AbstractType{
 
     private List<Field> fields;
 
@@ -17,4 +17,27 @@ public class StructType implements Type{
         return visitor.visit(this, parameter);
     }
 
+    @Override
+    public String typeExpression() {
+        return super.typeExpression();
+    }
+
+    @Override
+    public Type dot(String c) {
+        return super.dot(c);
+    }
+
+    @Override
+    public boolean equivalent(Type t) {
+        return super.equivalent(t);
+    }
+
+    public Field getField(String name){
+        for(Field field : fields){
+            if(field.getName().equals(name)){
+                return field;
+            }
+        }
+        return null;
+    }
 }
