@@ -8,7 +8,6 @@ public class ArithmeticOperator extends AbstractExpression {
     private Expression rightExpression;
     private String operator;
     private int line, column;
-    private boolean lvalue;
 
     public ArithmeticOperator(String operator, Expression leftExpression, Expression rightExpression, int line, int column) {
         this.leftExpression = leftExpression;
