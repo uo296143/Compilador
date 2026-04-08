@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.Locatable;
 import visitor.Visitor;
 
 import java.util.List;
@@ -17,19 +18,10 @@ public class StructType extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
-    @Override
-    public String typeExpression() {
-        return super.typeExpression();
-    }
 
     @Override
-    public Type dot(String c) {
-        return super.dot(c);
-    }
-
-    @Override
-    public boolean equivalent(Type t) {
-        return super.equivalent(t);
+    public Type dot(String c, Locatable locatable) {
+        return null;
     }
 
     public Field getField(String name){

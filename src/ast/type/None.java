@@ -9,9 +9,5 @@ public class None extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
-    @Override
-    public String typeExpression() {
-        return super.typeExpression();
-    }
 
 }

@@ -2,6 +2,7 @@ package ast.statement;
 
 import ast.statement.expression.Expression;
 import ast.statement.expression.Variable;
+import ast.type.Type;
 import visitor.Visitor;
 
 import java.util.List;
@@ -48,6 +49,16 @@ public class FunctionInvocation implements Statement, Expression {
     @Override
     public void setLvalue(boolean lvalue) {
         this.lvalue = lvalue;
+    }
+
+    @Override
+    public Type getType() {
+        return null;
+    }
+
+    @Override
+    public void setType(Type type) {
+
     }
 
     public List<Expression> getArguments() {

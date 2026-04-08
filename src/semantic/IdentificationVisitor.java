@@ -9,7 +9,9 @@ import ast.statement.Statement;
 import ast.statement.expression.Expression;
 import ast.statement.expression.Variable;
 import ast.type.ErrorType;
+import ast.type.Type;
 import symboltable.SymbolTable;
+import visitor.Visitor;
 
 public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
 
@@ -44,25 +46,15 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
 
     @Override
     public Void visit(Variable var, Void o) {
-        if(table.find(var.getName()) == null){
+        Definition def = table.find(var.getName());
+        if(def == null){
             var.setType(new ErrorType("Variable no definida: ", var));
         }
-        var.setType(var.getDefinition().getType());
+        var.setDefinition(def);
         return null;
     }
 
-    @Override
-    public Void visit(Input input, Void o) {
-        for(Expression e: input.getExpressions()) {
-            e.accept(this, o);
-            if(table.find(((Variable)e).getName()) == null){
-                new ErrorType("Variable no definida: ", e);
-            }
-        }
-        return null;
-    }
-
-    @Override
+    /*@Override
     public Void visit(FunctionInvocation funcInvoc, Void o) {
         funcInvoc.getFunction().accept(this, o);
         for(Expression expression : funcInvoc.getArguments()){
@@ -72,6 +64,6 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
             new ErrorType("Funcion no definida: ", funcInvoc);
         }
         return null;
-    }
+    }*/
 
 }

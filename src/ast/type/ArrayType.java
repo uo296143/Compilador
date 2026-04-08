@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.Locatable;
 import ast.statement.expression.Variable;
 import visitor.Visitor;
 
@@ -19,18 +20,8 @@ public class ArrayType extends AbstractType{
     }
 
     @Override
-    public String typeExpression() {
-        return of.toString();
-    }
-
-    @Override
-    public Type squareBrackets(Type t) {
-        return t.equals(new IntType()) ? of : new ErrorType("El tipo para acceder al array no es válido", new Variable("fake", 0,0));
-    }
-
-    @Override
-    public boolean equivalent(Type t) {
-        return ;
+    public Type squareBrackets(Type t, Locatable locatable) {
+        return t.equals(new IntType()) ? of : new ErrorType("El tipo para acceder al array no es válido", locatable);
     }
 
     public Type getOf(){

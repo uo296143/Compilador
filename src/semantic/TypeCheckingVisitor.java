@@ -32,25 +32,28 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(ArithmeticOperator arithOp, Void o) {
-        super.visit(arithOp, o);
-        arithOp.setType(arithOp.getLeftExpression().getType().arithmetic(arithOp.getRightExpression().getType()));
+        arithOp.getLeftExpression().accept(this, o);
+        arithOp.getRightExpression().accept(this, o);
+        arithOp.setType(arithOp.getLeftExpression().getType().arithmetic(arithOp.getRightExpression().getType(), arithOp));
         arithOp.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(ArrayAccess arrayAccess, Void o) {
-        super.visit(arrayAccess, o);
+        arrayAccess.getLeftExpression().accept(this, o);
+        arrayAccess.getRightExpression().accept(this, o);
         // El tipo de la izquierda siempre va a ser ArrayType sino salta error.
-        arrayAccess.setType(arrayAccess.getType().squareBrackets(arrayAccess.getRightExpression().getType()));
+        arrayAccess.setType(arrayAccess.getType().squareBrackets(arrayAccess.getRightExpression().getType(), arrayAccess));
         arrayAccess.setLvalue(true);
         return null;
     }
 
     @Override
     public Void visit(ComparativeOperator compOp, Void o) {
-        super.visit(compOp, o);
-        compOp.setType(compOp.getLeftExpression().getType().comparison(compOp.getRightExpression().getType()));
+        compOp.getLeftExpression().accept(this, o);
+        compOp.getRightExpression().accept(this, o);
+        compOp.setType(compOp.getLeftExpression().getType().comparison(compOp.getRightExpression().getType(), compOp));
         compOp.setLvalue(false);
         return null;
     }
@@ -64,15 +67,16 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(LogicalOperator logicOp, Void o) {
-        super.visit(logicOp, o);
-        logicOp.setType(logicOp.getLeftExpression().getType().comparison(logicOp.getRightExpression().getType()));
+        logicOp.getLeftExpression().accept(this, o);
+        logicOp.getRightExpression().accept(this, o);
+        logicOp.setType(logicOp.getLeftExpression().getType().comparison(logicOp.getRightExpression().getType(), logicOp));
         logicOp.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(NotArithmetic notArith, Void o) {
-        super.visit(notArith, o);
+        notArith.getExpression().accept(this, o);
         notArith.setType(notArith.getExpression().getType());
         notArith.setLvalue(false);
         return null;
@@ -89,7 +93,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(Point point, Void o) {
         point.getLeftExpression().accept(this, o);
-        point.setType(point.getLeftExpression().getType().dot(point.getFieldName()));
+        point.setType(point.getLeftExpression().getType().dot(point.getFieldName(), point));
         point.setLvalue(true);
         return null;
     }

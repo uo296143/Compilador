@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.Locatable;
 import ast.statement.Statement;
 import visitor.Visitor;
 
@@ -25,22 +26,12 @@ public class FunctionType extends AbstractType{
     }
 
     @Override
-    public String typeExpression() {
-        return super.typeExpression();
-    }
-
-    @Override
-    public Type parenthesis(List<Type> p) {
-        return super.parenthesis(p);
+    public Type parenthesis(List<Type> p, Locatable locatable) {
+        return null;
     }
 
     public Type getReturnType() {
         return returnType;
-    }
-
-    @Override
-    public boolean equivalent(Type t) {
-        return super.equivalent(t);
     }
 
     public List<Statement> getParameters(){

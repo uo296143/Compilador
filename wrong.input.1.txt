@@ -2,8 +2,6 @@ integer:int;
 character:char;
 real:double;
 
-juan = 3;
-
 def main()->None: {
   input integer; 
   character = 8.5;	# Error 1

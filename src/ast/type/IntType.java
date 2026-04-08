@@ -1,5 +1,6 @@
 package ast.type;
 
+import ast.Locatable;
 import visitor.Visitor;
 
 public class IntType extends AbstractType{
@@ -10,12 +11,7 @@ public class IntType extends AbstractType{
     }
 
     @Override
-    public String typeExpression() {
-        return super.typeExpression();
-    }
-
-    @Override
-    public Type arithmetic(Type t){
+    public Type arithmetic(Type t, Locatable locatable){
         return null;
     }
 }
