@@ -1,15 +1,15 @@
 package ast.statement.expression.constants;
 
+import ast.statement.expression.AbstractExpression;
 import ast.statement.expression.Expression;
 import ast.type.Type;
 import parser.LexerHelper;
 import visitor.Visitor;
 
-public class IntLiteral implements Expression {
+public class IntLiteral extends AbstractExpression {
 
     private int value;
     private int line, column;
-    private boolean lvalue;
 
     public IntLiteral(String value, int line, int column) {
         this.value = LexerHelper.lexemeToInt(value);
@@ -25,26 +25,6 @@ public class IntLiteral implements Expression {
     @Override
     public int getColumn() {
         return column;
-    }
-
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
-    }
-
-    @Override
-    public Type getType() {
-        return null;
-    }
-
-    @Override
-    public void setType(Type type) {
-
     }
 
     @Override

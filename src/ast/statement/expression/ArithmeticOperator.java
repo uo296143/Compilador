@@ -33,16 +33,6 @@ public class ArithmeticOperator extends AbstractExpression {
         return column;
     }
 
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
-    }
-
     public Expression getLeftExpression() {
         return leftExpression;
     }

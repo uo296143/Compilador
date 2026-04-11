@@ -9,7 +9,6 @@ public class ComparativeOperator extends AbstractExpression {
     private Expression rightExpression;
     private String operator;
     private int line, column;
-    private boolean lvalue;
 
     public ComparativeOperator(String operator, Expression leftExpression, Expression rightExpression, int line, int column) {
         this.leftExpression = leftExpression;
@@ -38,16 +37,6 @@ public class ComparativeOperator extends AbstractExpression {
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
-    }
-
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
     }
 
     public Expression getLeftExpression() {

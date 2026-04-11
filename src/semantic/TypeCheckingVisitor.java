@@ -44,7 +44,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         arrayAccess.getLeftExpression().accept(this, o);
         arrayAccess.getRightExpression().accept(this, o);
         // El tipo de la izquierda siempre va a ser ArrayType sino salta error.
-        arrayAccess.setType(arrayAccess.getType().squareBrackets(arrayAccess.getRightExpression().getType(), arrayAccess));
+        //arrayAccess.setType(arrayAccess.getType().squareBrackets(arrayAccess.getRightExpression().getType(), arrayAccess));
         arrayAccess.setLvalue(true);
         return null;
     }
@@ -67,9 +67,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(LogicalOperator logicOp, Void o) {
-        logicOp.getLeftExpression().accept(this, o);
-        logicOp.getRightExpression().accept(this, o);
-        logicOp.setType(logicOp.getLeftExpression().getType().comparison(logicOp.getRightExpression().getType(), logicOp));
+        Expression leftExpression = logicOp.getLeftExpression();
+        Expression rightExpression = logicOp.getRightExpression();
+        leftExpression.accept(this, o);
+        rightExpression.accept(this, o);
+        leftExpression.getType().logic(rightExpression.getType(), logicOp);
         logicOp.setLvalue(false);
         return null;
     }
@@ -112,6 +114,30 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         }
         funcInvoc.setLvalue(false);
         funcInvoc.setType(funcInvoc.getFunction().getType());
+        return null;
+    }
+
+    @Override
+    public Void visit(Assignment assignment, Void o) {
+        Expression leftExpression = assignment.getLeftExpression();
+        Expression rightExpression = assignment.getRightExpression();
+        leftExpression.accept(this, o);
+        rightExpression.accept(this, o);
+        if(!leftExpression.getLvalue()){
+            new ErrorType("La expresión de la izquierda no es un Lvalue", assignment);
+        }
+        rightExpression.getType().mustPromoteTo(leftExpression.getType(), assignment);
+        return null;
+    }
+
+    @Override
+    public Void visit(Input input, Void o) {
+        for(Expression e: input.getExpressions()) {
+            e.accept(this, o);
+            if(!e.getLvalue()){
+                new ErrorType("La expresión no es un Lvalue", input);
+            }
+        }
         return null;
     }
 

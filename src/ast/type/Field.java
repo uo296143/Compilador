@@ -27,6 +27,10 @@ public class Field implements Locatable {
         this.column = column;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public String getName(){return name;}
 
     @Override

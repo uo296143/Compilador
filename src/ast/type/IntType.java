@@ -10,8 +10,27 @@ public class IntType extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
-    @Override
     public Type arithmetic(Type t, Locatable locatable){
-        return null;
+        if(t instanceof CharType || t instanceof IntType){
+            return new IntType();
+        }else{
+            if(t instanceof DoubleType){
+                return new DoubleType();
+            }else{
+                if(!(t instanceof ErrorType)){
+                    return new ErrorType("No se pudo llevar a cabo la operación aritmética",
+                            locatable);
+                }
+
+            }
+        }
+        return t; // Sino se propaga el error.
+    }
+
+    @Override
+    public void mustPromoteTo(Type type, Locatable locatable) {
+        if(!(type instanceof IntType || type instanceof DoubleType)){
+            new ErrorType("El tipo int no puede promocionar a : "+type.toString(), locatable);
+        }
     }
 }

@@ -10,8 +10,40 @@ public class CharType extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
+    /**
+     * Un char puede hacer operaciones aritméticas con un char y resultará un INT,
+     * si las hace con un INT resultará un INT y con un DOUBLE otro DOUBLE.
+     * @param t
+     * @param locatable
+     * @return
+     */
     @Override
     public Type arithmetic(Type t, Locatable locatable){
-        return null;
+        if(t instanceof CharType || t instanceof IntType){
+            return new IntType();
+        }else{
+            if(t instanceof DoubleType){
+                return new DoubleType();
+            }else{
+                if(!(t instanceof ErrorType)){
+                    return new ErrorType("No se pudo llevar a cabo la operación aritmética",
+                            locatable);
+                }
+
+            }
+        }
+        return t; // Sino se propaga el error.
+    }
+
+    /**
+     * El tipo CHAR debe promocionar a : DOUBLE e INT
+     * @param type
+     * @param locatable
+     */
+    @Override
+    public void mustPromoteTo(Type type, Locatable locatable) {
+        if(!(type instanceof CharType || type instanceof IntType || type instanceof DoubleType)){
+            new ErrorType("El tipo char no puede promocionar a : "+type.toString(), locatable);
+        }
     }
 }

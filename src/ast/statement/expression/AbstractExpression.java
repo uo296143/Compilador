@@ -29,6 +29,11 @@ public class AbstractExpression implements Expression{
     }
 
     @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+        return null;
+    }
+
+    @Override
     public int getLine() {
         return 0;
     }
@@ -36,10 +41,5 @@ public class AbstractExpression implements Expression{
     @Override
     public int getColumn() {
         return 0;
-    }
-
-    @Override
-    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
-        return null;
     }
 }
