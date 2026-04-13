@@ -1,5 +1,6 @@
 package ast.statement;
 
+import ast.statement.expression.AbstractExpression;
 import ast.statement.expression.Expression;
 import ast.statement.expression.Variable;
 import ast.type.Type;
@@ -7,12 +8,11 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionInvocation implements Statement, Expression {
+public class FunctionInvocation extends AbstractExpression implements Statement {
 
     private Variable function;
     private List<Expression> arguments;
     private int line, column;
-    private boolean lvalue;
 
     public FunctionInvocation(Variable function, List<Expression> arguments, int line, int column){
         this.function = function;
@@ -41,32 +41,16 @@ public class FunctionInvocation implements Statement, Expression {
         return visitor.visit(this, parameter);
     }
 
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
-    }
-
-    @Override
-    public Type getType() {
-        return null;
-    }
-
-    @Override
-    public void setType(Type type) {
-
-    }
-
     public List<Expression> getArguments() {
         return arguments;
     }
 
     public Variable getFunction() {
         return function;
+    }
+
+    public void setFunction(Variable variable){
+        this.function = variable;
     }
 
     @Override

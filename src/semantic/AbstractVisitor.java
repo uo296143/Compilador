@@ -10,10 +10,8 @@ import ast.statement.expression.constants.CharLiteral;
 import ast.statement.expression.constants.DoubleLiteral;
 import ast.statement.expression.constants.IntLiteral;
 import ast.type.*;
-import errorhandler.ErrorHandler;
 import visitor.Visitor;
 
-import java.util.ArrayList;
 
 public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
@@ -124,6 +122,7 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
     @Override
     public TR visit(FunctionInvocation funcInvoc, TP o) {
+        funcInvoc.getFunction().accept(this, o);
         for(Expression expression : funcInvoc.getArguments()){
             expression.accept(this, o);
         }

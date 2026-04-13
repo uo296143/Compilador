@@ -13,8 +13,13 @@ def g(b:int, b:double)->None: {		# Error 3
 def g()->None: {						# Error 5
 }
 
+def juan(a:int)->int: {
+  return a;
+}
+
 def main()->None: {
   f();       					# Error 6
   f(3.2);    					# Error 7
   i = g();     					# Error 8
+  i = juan(3);
 }

@@ -23,10 +23,10 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
 
     @Override
     public Void visit(FunctionDefinition funcDef, Void o) {
-        table.set();
         if(!table.insert(funcDef)){
             new ErrorType("Funcion repetida : ", funcDef);
         }
+        table.set();
         funcDef.getType().accept(this, o);
         for(Statement statement : funcDef.getStatements()){
             statement.accept(this, o);
@@ -54,16 +54,17 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
         return null;
     }
 
-    /*@Override
+    @Override
     public Void visit(FunctionInvocation funcInvoc, Void o) {
         funcInvoc.getFunction().accept(this, o);
         for(Expression expression : funcInvoc.getArguments()){
             expression.accept(this, o);
         }
-        if(table.find(funcInvoc.getFunction().getName()) == null){
+        /*Definition def = table.find(funcInvoc.getFunction().getName());
+        if(def == null){
             new ErrorType("Funcion no definida: ", funcInvoc);
-        }
+        }*/
         return null;
-    }*/
+    }
 
 }

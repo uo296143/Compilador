@@ -29,7 +29,7 @@ public class AbstractExpression implements Expression{
     }
 
     @Override
-    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter){
         return null;
     }
 
@@ -41,5 +41,10 @@ public class AbstractExpression implements Expression{
     @Override
     public int getColumn() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

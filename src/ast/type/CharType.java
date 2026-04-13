@@ -46,4 +46,22 @@ public class CharType extends AbstractType{
             new ErrorType("El tipo char no puede promocionar a : "+type.toString(), locatable);
         }
     }
+
+    @Override
+    public Type logic(Type t, Locatable locatable) {
+        if(t instanceof CharType || t instanceof IntType)
+            return t;
+        return new ErrorType("No se puede hacer una operación lógica con "+t.toString(),locatable);
+    }
+
+    @Override
+    public Type comparison(Type t, Locatable locatable) {
+        t.mustBeBuiltIn(locatable);
+        return t;
+    }
+
+    @Override
+    public void mustBeLogical(Locatable locatable) {
+
+    }
 }

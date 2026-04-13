@@ -27,4 +27,10 @@ public class DoubleType extends AbstractType{
             new ErrorType("El tipo double no puede promocionar a : "+type.toString(), locatable);
         }
     }
+
+    @Override
+    public Type comparison(Type t, Locatable locatable) {
+        t.mustBeBuiltIn(locatable);
+        return t;
+    }
 }
