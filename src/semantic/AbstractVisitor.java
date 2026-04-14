@@ -194,6 +194,7 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
     @Override
     public TR visit(Field field, TP o) {
+        field.getType().accept(this, o);
         return null;
     }
 
@@ -217,6 +218,9 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
     @Override
     public TR visit(StructType structType, TP o) {
+        for(Field field : structType.getFields()){
+            field.accept(this, o);
+        }
         return null;
     }
 }

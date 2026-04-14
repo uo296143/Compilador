@@ -44,6 +44,12 @@ public class AbstractType implements Type{
     }
 
     @Override
+    public int numberOfBytes() {
+        new ErrorType("El número de bytes solo lo saben los tipos", new Variable("a",99,99));
+        return 99;
+    }
+
+    @Override
     public Type dot(String c, Locatable locatable) {
         return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }

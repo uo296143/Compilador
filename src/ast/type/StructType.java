@@ -42,4 +42,8 @@ public class StructType extends AbstractType{
         }
         return null;
     }
+
+    public List<Field> getFields() {
+        return fields;
+    }
 }

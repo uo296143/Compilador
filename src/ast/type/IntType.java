@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Locatable;
+import ast.statement.expression.Variable;
 import visitor.Visitor;
 
 public class IntType extends AbstractType{
@@ -80,5 +81,10 @@ public class IntType extends AbstractType{
 
     @Override
     public void mustBeBuiltIn(Locatable locatable) {
+    }
+
+    @Override
+    public int numberOfBytes() {
+        return 2;
     }
 }

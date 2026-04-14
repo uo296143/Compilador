@@ -19,7 +19,11 @@ def main()->None: {
     integer:int;
     character:char;
   };
-  vector: [10][5]int;
+  vector:[10][5]int;
+  if 0: {
+    r = 3;
+  }
+
   f(c, r,i);
   i = vector[2][1+1];
 }

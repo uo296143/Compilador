@@ -95,4 +95,9 @@ public class CharType extends AbstractType{
     @Override
     public void mustBeBuiltIn(Locatable locatable) {
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 1;
+    }
 }

@@ -18,4 +18,5 @@ public interface Type extends ASTNode {
     public Type squareBrackets(Type t, Locatable locatable);
     public Type dot(String c, Locatable locatable);
     public Type parenthesis(List<Type> p, Locatable locatable);
+    public int numberOfBytes();
 }
