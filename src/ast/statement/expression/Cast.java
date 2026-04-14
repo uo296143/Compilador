@@ -40,4 +40,9 @@ public class Cast extends AbstractExpression {
     public Expression getExpression() {
         return expression;
     }
+
+    public Type getCastType(){
+        return castType;
+    }
+
 }

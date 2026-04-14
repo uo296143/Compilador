@@ -9,5 +9,4 @@ public class None extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
-
 }

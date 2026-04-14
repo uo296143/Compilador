@@ -1,0 +1,25 @@
+# Global variables
+i: int;
+r: double;
+c: char;
+
+# Functions
+def f()->int: {
+  lr:double;
+  li:int;
+
+  #li = pi;
+  #lr = pr;
+  return li;
+}
+
+# Main program
+def main()->None: {
+  pair: struct {
+    integer:int;
+    character:char;
+  };
+  vector: [10][5]int;
+  f(c, r,i);
+  i = vector[2][1+1];
+}

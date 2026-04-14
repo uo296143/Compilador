@@ -35,4 +35,5 @@ public class NotLogic extends AbstractExpression{
     public Expression getExpression() {
         return expression;
     }
+
 }

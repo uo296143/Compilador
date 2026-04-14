@@ -28,6 +28,11 @@ public class IntType extends AbstractType{
     }
 
     @Override
+    public Type arithmetic(Locatable locatable) {
+        return this;
+    }
+
+    @Override
     public void mustPromoteTo(Type type, Locatable locatable) {
         if(!(type instanceof IntType || type instanceof DoubleType)){
             new ErrorType("El tipo int no puede promocionar a : "+type.toString(), locatable);
@@ -42,6 +47,11 @@ public class IntType extends AbstractType{
     }
 
     @Override
+    public Type logic(Locatable locatable) {
+        return this;
+    }
+
+    @Override
     public Type comparison(Type t, Locatable locatable) {
         t.mustBeBuiltIn(locatable);
         return t;
@@ -49,5 +59,26 @@ public class IntType extends AbstractType{
 
     @Override
     public void mustBeLogical(Locatable locatable) {
+    }
+
+    @Override
+    public Type canBeCastTo(Type type, Locatable locatable) {
+        if(type instanceof CharType){
+            return type;
+        }else{
+            if(type instanceof IntType){
+                return type;
+            }else{
+                if(type instanceof DoubleType){
+                    return type;
+                }else{
+                    return new ErrorType("El tipo al que se quiere castear no es un tipo simple", locatable);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void mustBeBuiltIn(Locatable locatable) {
     }
 }

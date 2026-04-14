@@ -63,7 +63,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(Cast cast, Void o) {
         cast.getExpression().accept(this, o);
-        cast.setType(cast.getExpression().getType());
+        cast.setType(cast.getExpression().getType().canBeCastTo(cast.getCastType(), cast));
         return null;
     }
 
@@ -73,7 +73,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         Expression rightExpression = logicOp.getRightExpression();
         leftExpression.accept(this, o);
         rightExpression.accept(this, o);
-        leftExpression.getType().logic(rightExpression.getType(), logicOp);
+        logicOp.setType(leftExpression.getType().logic(rightExpression.getType(), logicOp));
         logicOp.setLvalue(false);
         return null;
     }
@@ -81,19 +81,16 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(NotArithmetic notArith, Void o) {
         notArith.getExpression().accept(this, o);
-        notArith.setType(notArith.getExpression().getType());
+        notArith.setType(notArith.getExpression().getType().arithmetic(notArith));
         notArith.setLvalue(false);
-        notArith.getType().arithmetic(notArith);
         return null;
     }
 
     @Override
     public Void visit(NotLogic notLogic, Void o) {
         notLogic.getExpression().accept(this, o);
-        notLogic.getExpression().getType().mustBeLogical(notLogic);
-        notLogic.setType(notLogic.getExpression().getType());
+        notLogic.setType(notLogic.getExpression().getType().logic(notLogic));
         notLogic.setLvalue(false);
-        notLogic.getType().mustBeLogical(notLogic);
         return null;
     }
 
@@ -165,11 +162,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         for(Expression expression : funcInvoc.getArguments()){
             expression.accept(this, o);
         }
-        funcInvoc.setType(funcInvoc.getFunction().getType());
         List<Type> types = funcInvoc.getArguments().stream()
                 .map(Expression::getType)
                 .toList();
-        funcInvoc.getFunction().getType().parenthesis(types, funcInvoc);
+        funcInvoc.setType(funcInvoc.getFunction().getType().parenthesis(types, funcInvoc));
         return null;
     }
 
@@ -178,8 +174,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         funcDef.getType().accept(this, o);
         for(Statement statement : funcDef.getStatements()){
             statement.accept(this, o);
-            if(statement instanceof Return){
-                Return return_statement = (Return)statement;
+            if(statement instanceof Return return_statement){
                 return_statement.getReturnExpression().getType().mustPromoteTo(((FunctionType)funcDef.getType()).getReturnType(), funcDef);
             }
         }
