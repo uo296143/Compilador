@@ -21,7 +21,10 @@ public class ArrayType extends AbstractType{
 
     @Override
     public Type squareBrackets(Type t, Locatable locatable) {
-        return t.equals(new IntType()) ? of : new ErrorType("El tipo para acceder al array no es válido", locatable);
+        if(t instanceof ErrorType){
+            return this;
+        }
+        return ( t.equals(new IntType()) || t.equals(new CharType()) ) ? of : new ErrorType("El tipo para acceder al array no es válido", locatable);
     }
 
     public Type getOf(){

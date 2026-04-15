@@ -12,7 +12,6 @@ public class DoubleType extends AbstractType{
 
     @Override
     public Type arithmetic(Type t, Locatable locatable){
-
         if(t instanceof ErrorType){
             return t;
         }
@@ -27,6 +26,7 @@ public class DoubleType extends AbstractType{
 
     @Override
     public void mustPromoteTo(Type type, Locatable locatable) {
+
         if(!(type instanceof DoubleType)){
             new ErrorType("El tipo double no puede promocionar a : "+type.toString(), locatable);
         }
@@ -34,12 +34,18 @@ public class DoubleType extends AbstractType{
 
     @Override
     public Type comparison(Type t, Locatable locatable) {
+        if(t instanceof ErrorType){
+            return this;
+        }
         t.mustBeBuiltIn(locatable);
         return t;
     }
 
     @Override
     public Type canBeCastTo(Type type, Locatable locatable) {
+        if(type instanceof ErrorType){
+            return this;
+        }
         if(type instanceof CharType){
             return type;
         }else{

@@ -42,6 +42,9 @@ public class IntType extends AbstractType{
 
     @Override
     public Type logic(Type t, Locatable locatable) {
+        if(t instanceof ErrorType){
+            return this;
+        }
         if(t instanceof CharType || t instanceof IntType)
             return t;
         return new ErrorType("No se puede hacer una operación lógica con "+t.toString(),locatable);
@@ -54,6 +57,9 @@ public class IntType extends AbstractType{
 
     @Override
     public Type comparison(Type t, Locatable locatable) {
+        if(t instanceof ErrorType){
+            return this;
+        }
         t.mustBeBuiltIn(locatable);
         return t;
     }
@@ -64,6 +70,9 @@ public class IntType extends AbstractType{
 
     @Override
     public Type canBeCastTo(Type type, Locatable locatable) {
+        if(type instanceof ErrorType){
+            return this;
+        }
         if(type instanceof CharType){
             return type;
         }else{

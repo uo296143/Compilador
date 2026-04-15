@@ -60,6 +60,7 @@ public class FunctionType extends AbstractType{
 
     @Override
     public void mustPromoteTo(Type type, Locatable locatable) {
+
         if( ! type.equals(returnType) ){
             new ErrorType("El tipo de retorno " + returnType.toString() + " no coincide con el la variable", locatable);
         }
