@@ -9,7 +9,6 @@ public class Cast extends AbstractExpression {
     private Expression expression;
     private Type castType;
     private int line, column;
-    private boolean lvalue;
 
     public Cast(Expression expression,Type castType, int line, int column) {
         this.expression = expression;
@@ -38,17 +37,12 @@ public class Cast extends AbstractExpression {
         return visitor.visit(this, parameter);
     }
 
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
-    }
-
     public Expression getExpression() {
         return expression;
     }
+
+    public Type getCastType(){
+        return castType;
+    }
+
 }

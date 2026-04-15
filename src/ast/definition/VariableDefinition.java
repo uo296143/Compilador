@@ -30,6 +30,14 @@ public class VariableDefinition implements Definition, Statement {
         return type;
     }
 
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     @Override
     public String getName() {
         return name;

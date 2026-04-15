@@ -20,11 +20,23 @@ public class Field implements Locatable {
         return ((Field) obj).getName().equals(this.name);
     }
 
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     public Field(String name, Type type, int line, int column) {
         this.name = name;
         this.type = type;
         this.line = line;
         this.column = column;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public String getName(){return name;}

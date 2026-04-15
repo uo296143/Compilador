@@ -18,10 +18,20 @@ public class StructType extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
-
+    /**
+     * Creo que solo comprueba que los campos a los que se intenta acceder existen.
+     * @param c
+     * @param locatable
+     * @return
+     */
     @Override
     public Type dot(String c, Locatable locatable) {
-        return null;
+        for(Field field : fields){
+            if(field.getName().equals(c)){
+                return field.getType();
+            }
+        }
+        return new ErrorType("El campo : "+c+" no está en el struct", locatable);
     }
 
     public Field getField(String name){
@@ -31,5 +41,9 @@ public class StructType extends AbstractType{
             }
         }
         return null;
+    }
+
+    public List<Field> getFields() {
+        return fields;
     }
 }

@@ -4,24 +4,33 @@ import ast.type.Type;
 import visitor.Visitor;
 
 public class AbstractExpression implements Expression{
+
+    private boolean lvalue;
+    private Type type;
+
     @Override
     public boolean getLvalue() {
-        return false;
+        return lvalue;
     }
 
     @Override
     public void setLvalue(boolean lvalue) {
-
+        this.lvalue = lvalue;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return type;
     }
 
     @Override
     public void setType(Type type) {
+        this.type = type;
+    }
 
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter){
+        return null;
     }
 
     @Override
@@ -35,7 +44,7 @@ public class AbstractExpression implements Expression{
     }
 
     @Override
-    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
-        return null;
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

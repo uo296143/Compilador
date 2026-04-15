@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Locatable;
+import ast.definition.VariableDefinition;
 import ast.statement.Statement;
 import visitor.Visitor;
 
@@ -25,16 +26,42 @@ public class FunctionType extends AbstractType{
         return statements;
     }
 
-    @Override
-    public Type parenthesis(List<Type> p, Locatable locatable) {
-        return null;
-    }
-
     public Type getReturnType() {
         return returnType;
     }
 
     public List<Statement> getParameters(){
         return List.copyOf(statements);
+    }
+
+    /**
+     * Comprueba que los tipos de los argumentos con los que se invoca una función sean los mismos
+     * que se definieron.
+     * @param p
+     * @param locatable
+     * @return
+     */
+    @Override
+    public Type parenthesis(List<Type> p, Locatable locatable) {
+        int contador = 0;
+        if(p.size() != statements.size()){
+            return new ErrorType("Se deberían haber pasado "+ statements.size() +" parámetros y se han pasado "+p.size()+" parámetros.", locatable);
+        }
+        for(Statement statement : statements){
+            if( ! ((VariableDefinition)statement).getType().equals(p.get(contador)) ){
+                return new ErrorType("El tipo de los argumentos no coincide con el tipo de los parámetros", locatable);
+            }
+            // La comprobación de que los parámetros sean tipos simples ya la hacemos en el sintáctico.
+            ((VariableDefinition) statement).getType().mustBeBuiltIn(locatable);
+            contador++;
+        }
+        return null;
+    }
+
+    @Override
+    public void mustPromoteTo(Type type, Locatable locatable) {
+        if( ! type.equals(returnType) ){
+            new ErrorType("El tipo de retorno " + returnType.toString() + " no coincide con el la variable", locatable);
+        }
     }
 }

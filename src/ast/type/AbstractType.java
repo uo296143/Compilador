@@ -10,26 +10,22 @@ public class AbstractType implements Type{
 
     @Override
     public Type arithmetic(Type t, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
     public Type arithmetic(Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
     public Type logic(Type t, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
     public Type logic(Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
@@ -39,26 +35,28 @@ public class AbstractType implements Type{
 
     @Override
     public Type squareBrackets(Type t, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
     public Type parenthesis(List<Type> p, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
+    }
+
+    @Override
+    public int numberOfBytes() {
+        new ErrorType("El número de bytes solo lo saben los tipos", new Variable("a",99,99));
+        return 99;
     }
 
     @Override
     public Type dot(String c, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
     public Type comparison(Type t, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
@@ -73,8 +71,7 @@ public class AbstractType implements Type{
 
     @Override
     public Type canBeCastTo(Type type, Locatable locatable) {
-        new ErrorType("Ha entrado en AbstractType y no debería", locatable);
-        return null;
+        return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }
 
     @Override
@@ -84,12 +81,20 @@ public class AbstractType implements Type{
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) return true;
+        if (obj == null) return false;
+
+        return this.getClass() == obj.getClass();
     }
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         new ErrorType("Ha entrado en AbstractType y no debería", new Variable("name", 0, 0));
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

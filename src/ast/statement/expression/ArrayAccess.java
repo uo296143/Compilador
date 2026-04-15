@@ -6,7 +6,6 @@ public class ArrayAccess extends AbstractExpression{
 
     private Expression leftExpression, rightExpression;
     private int line, column;
-    private boolean lvalue;
 
     public ArrayAccess(Expression leftExpression, Expression rightExpression){
         this.leftExpression = leftExpression;
@@ -32,16 +31,6 @@ public class ArrayAccess extends AbstractExpression{
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP parameter) {
         return visitor.visit(this, parameter);
-    }
-
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
     }
 
     public Expression getLeftExpression() {

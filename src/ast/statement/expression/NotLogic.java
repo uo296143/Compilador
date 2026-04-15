@@ -6,7 +6,6 @@ public class NotLogic extends AbstractExpression{
 
     private Expression expression;
     private int line, column;
-    private boolean lvalue;
 
     public NotLogic(Expression expression, int line, int column) {
         this.expression = expression;
@@ -33,17 +32,8 @@ public class NotLogic extends AbstractExpression{
         return visitor.visit(this, parameter);
     }
 
-    @Override
-    public boolean getLvalue() {
-        return lvalue;
-    }
-
-    @Override
-    public void setLvalue(boolean lvalue) {
-        this.lvalue = lvalue;
-    }
-
     public Expression getExpression() {
         return expression;
     }
+
 }
