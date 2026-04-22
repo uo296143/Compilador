@@ -56,6 +56,11 @@ public class AbstractType implements Type{
     }
 
     @Override
+    public Type superType(Type type) {
+        return new ErrorType("Ha entrado en AbstractType y no debería", new Variable("a",99,99));
+    }
+
+    @Override
     public Type dot(String c, Locatable locatable) {
         return new ErrorType("Ha entrado en AbstractType y no debería", locatable);
     }

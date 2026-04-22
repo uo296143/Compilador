@@ -67,7 +67,7 @@ public class CharType extends AbstractType{
 
     @Override
     public Type logic(Locatable locatable) {
-        return this;
+        return new IntType();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CharType extends AbstractType{
             return this;
         }
         t.mustBeBuiltIn(locatable);
-        return t;
+        return new IntType();
     }
 
     @Override
@@ -116,5 +116,13 @@ public class CharType extends AbstractType{
     @Override
     public char suffix() {
         return 'b';
+    }
+
+    @Override
+    public Type superType(Type type){
+        if(type.equals(new IntType()) || type.equals(new DoubleType())){
+            return type;
+        }
+        return new ErrorType("Error en superType, el tipo no es un tipo simple", new Variable("", 0, 0));
     }
 }

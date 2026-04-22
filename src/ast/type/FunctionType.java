@@ -11,6 +11,7 @@ public class FunctionType extends AbstractType{
 
     private Type returnType;
     private List<Statement> statements;
+    private int numberOfBytesOfParameters;
 
     public FunctionType(Type returnType, List<Statement> statements) {
         this.returnType = returnType;
@@ -66,4 +67,13 @@ public class FunctionType extends AbstractType{
             new ErrorType("El tipo de retorno " + returnType.toString() + " no coincide con el la variable", locatable);
         }
     }
+
+    public int getNumberOfBytesOfParameters() {
+        return numberOfBytesOfParameters;
+    }
+
+    public void setNumberOfBytesOfParameters(int numberOfBytesOfParameters) {
+        this.numberOfBytesOfParameters = numberOfBytesOfParameters;
+    }
+
 }

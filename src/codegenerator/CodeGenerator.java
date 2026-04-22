@@ -11,6 +11,7 @@ public class CodeGenerator {
     public CodeGenerator(String inputFileName, String outputFileName) {
         try {
             this.out = new PrintWriter(new FileWriter(outputFileName));
+            source(inputFileName);
         } catch (IOException e) {
             System.err.println("Error creando el archivo de salida: " + e.getMessage());
         }
@@ -110,6 +111,16 @@ public class CodeGenerator {
     public void i2b() { write("i2b"); }
 
     /* --- Saltos --- */
+
+    private int labelCounter = 0;
+
+    /**
+     * Genera una etiqueta única para saltos (if, while, etc.)
+     * @return String con formato "labelX"
+     */
+    public String getLabel() {
+        return "label" + (labelCounter++);
+    }
 
     public void label(String id) { write(id + ":"); }
     public void jmp(String label) { write("jmp " + label); }

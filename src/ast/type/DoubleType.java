@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Locatable;
+import ast.statement.expression.Variable;
 import visitor.Visitor;
 
 public class DoubleType extends AbstractType{
@@ -38,7 +39,7 @@ public class DoubleType extends AbstractType{
             return this;
         }
         t.mustBeBuiltIn(locatable);
-        return t;
+        return new IntType();
     }
 
     @Override
@@ -73,5 +74,13 @@ public class DoubleType extends AbstractType{
     @Override
     public char suffix() {
         return 'f';
+    }
+
+    @Override
+    public Type superType(Type type){
+        if(type.equals(new IntType()) || type.equals(new DoubleType()) || type.equals(new CharType())){
+            return this;
+        }
+        return new ErrorType("Error en superType, el tipo no es un tipo simple", new Variable("", 0, 0));
     }
 }

@@ -13,6 +13,7 @@ public class FunctionDefinition implements Definition {
     private Type type;
     private int line, column;
     private int scope;
+    private int numberOfBytesOfLocalVariables;
 
     public FunctionDefinition(List<Statement> statements, String name, Type type, int line, int column) {
         this.statements = statements;
@@ -65,4 +66,13 @@ public class FunctionDefinition implements Definition {
     public String toString(){
         return name;
     }
+
+    public int getNumberOfBytesOfLocalVariables() {
+        return numberOfBytesOfLocalVariables;
+    }
+
+    public void setNumberOfBytesOfLocalVariables(int numberOfBytesOfLocalVariables) {
+        this.numberOfBytesOfLocalVariables = numberOfBytesOfLocalVariables;
+    }
+
 }

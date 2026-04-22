@@ -61,7 +61,7 @@ public class IntType extends AbstractType{
             return this;
         }
         t.mustBeBuiltIn(locatable);
-        return t;
+        return new IntType();
     }
 
     @Override
@@ -100,5 +100,16 @@ public class IntType extends AbstractType{
     @Override
     public char suffix() {
         return 'i';
+    }
+
+    @Override
+    public Type superType(Type type){
+        if(type.equals(new IntType()) || type.equals(new CharType())){
+            return this;
+        }
+        if(type.equals(new DoubleType())){
+            return new DoubleType();
+        }
+        return new ErrorType("Error en superType, el tipo no es un tipo simple", new Variable("", 0, 0));
     }
 }

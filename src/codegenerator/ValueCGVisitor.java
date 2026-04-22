@@ -14,7 +14,10 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
 
     public ValueCGVisitor(CodeGenerator codeGenerator){
         this.codeGenerator = codeGenerator;
-        address = new AddressCGVisitor(codeGenerator);
+    }
+
+    public void setAddressCGVisitor(AddressCGVisitor visitor){
+        this.address = visitor;
     }
 
     /**
@@ -87,7 +90,14 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
-    // INDEXING NO HACER
+    /**
+     * [[ArrayAccess: exp1 -> exp2 exp3]]() =
+     *      address[[expression1]]
+     *      <load> expression1.type.suffix()
+     * @param arrayAccess
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(ArrayAccess arrayAccess, Void o) {
         ;
@@ -126,10 +136,11 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(ComparativeOperator compOp, Void o) {
+        Type mayor = compOp.getLeftExpression().getType().superType(compOp.getRightExpression().getType());
         compOp.getLeftExpression().accept(this, o);
-        codeGenerator.convert(compOp.getLeftExpression().getType(), compOp.getType());
+        codeGenerator.convert(compOp.getLeftExpression().getType(), mayor);
         compOp.getRightExpression().accept(this, o);
-        codeGenerator.convert(compOp.getRightExpression().getType(), compOp.getType());
+        codeGenerator.convert(compOp.getRightExpression().getType(), mayor);
         char suffix = compOp.getType().suffix();
         switch (compOp.getOperator()) {
             case ">":  codeGenerator.gt(suffix); break;
@@ -196,7 +207,14 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
-    // FIELD ACCESS NO HACER
+    /**
+     * [[Point: exp1 -> exp2 ID]] =
+     *      address[[exp1]]
+     *      <load> expression1.type.suffix()
+     * @param point
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(Point point, Void o) {
         ;

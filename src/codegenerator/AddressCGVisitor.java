@@ -12,11 +12,22 @@ public class AddressCGVisitor extends AbstractVisitor<Void, Void> {
     private ValueCGVisitor value;
 
     public AddressCGVisitor(CodeGenerator codeGenerator){
-        codeGenerator = codeGenerator;
-        value = new ValueCGVisitor(codeGenerator);
+        this.codeGenerator = codeGenerator;
     }
 
-    // FIELD ACCESS NO HACER
+    public void setValueCGVisitor(ValueCGVisitor visitor){
+        this.value = visitor;
+    }
+
+    /**
+     * [[Point: exp1 -> exp2 ID]] =
+     *      address[[exp2]]
+     *      <pushi> expression2.type.getField(epression1.fieldName).offset
+     *      <addi>
+     * @param point
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(Point point, Void o) {
         ;
@@ -48,7 +59,18 @@ public class AddressCGVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
-    // INDEXING NO HACER
+    /**
+     * [[ArrayAccess: exp1 -> exp2 exp3]]() =
+     *      address[[expression2]]
+     *      value[[expression3]]
+     *      cg.convert(expression3.type, IntType)
+     *      <pushi> expression1.type.numberOfBytes()
+     *      <muli>
+     *      <addi>
+     * @param arrayAccess
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(ArrayAccess arrayAccess, Void o) {
         return null;

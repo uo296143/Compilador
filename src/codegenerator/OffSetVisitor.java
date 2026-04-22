@@ -42,19 +42,22 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
             currentParamOffset += size;
             totalParamsSize += size;
         }
-        // Guardamos el total para la instrucción 'ret'
-        // funcDef.setTotalParamsSize(totalParamsSize);
+        // Guardamos el total de la memoria de las variables locales para la instrucción 'ret'
+        ((FunctionType)funcDef.getType()).setNumberOfBytesOfParameters(totalParamsSize);
         int numberOfBytes = 0;
+        int totalLocalsSize = 0;
         for(Statement statement : funcDef.getStatements()){
             statement.accept(this, o);
             if(statement instanceof VariableDefinition varDef){
                 // Variables Locales : el tamaño de las anteriores + el de ellas mismas.
-                numberOfBytes += varDef.getType().numberOfBytes();
+                int size = varDef.getType().numberOfBytes();
+                numberOfBytes += size;
+                totalLocalsSize += size;
                 varDef.setOffset(-numberOfBytes);
             }
         }
         // Guardamos el total para la instrucción 'enter'
-        // funcDef.setTotalLocalsSize(totalLocalsSize);
+        funcDef.setNumberOfBytesOfLocalVariables(totalLocalsSize);
         return null;
     }
 

@@ -4,14 +4,11 @@ import ast.definition.Definition;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.statement.FunctionInvocation;
-import ast.statement.Input;
 import ast.statement.Statement;
 import ast.statement.expression.Expression;
 import ast.statement.expression.Variable;
 import ast.type.ErrorType;
-import ast.type.Type;
 import symboltable.SymbolTable;
-import visitor.Visitor;
 
 public class IdentificationVisitor extends AbstractVisitor<Void, Void>{
 

@@ -20,4 +20,5 @@ public interface Type extends ASTNode {
     public Type parenthesis(List<Type> p, Locatable locatable);
     public int numberOfBytes();
     public char suffix();
+    public Type superType(Type type);
 }
