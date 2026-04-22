@@ -32,4 +32,7 @@ public class CharLiteral extends AbstractExpression {
         return visitor.visit(this, parameter);
     }
 
+    public char getValue() {
+        return value;
+    }
 }

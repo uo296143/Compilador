@@ -1,5 +1,7 @@
 package codegenerator;
 
+import ast.type.Type;
+
 import java.io.*;
 
 public class CodeGenerator {
@@ -23,10 +25,12 @@ public class CodeGenerator {
 
     /* --- Instrucciones PUSH --- */
 
-    public void pushb(int value) { write("pushb " + value); }
-    public void pushi(int value) { write("pushi " + value); }
-    public void pushf(double value) { write("pushf " + value); }
-    public void pusha(int address) { write("pusha " + address); }
+    public void push(char type, int value) {
+        write("push" + type + " " + value);
+    }
+    public void push(char type, double value) {
+        write("push" + type + " " + value);
+    }
     public void pushbp() { write("pusha bp"); }
 
     /* --- Load y Store (Parametrizados) --- */
@@ -68,6 +72,37 @@ public class CodeGenerator {
     public void in(char type) { write("in" + type); }
 
     /* --- Conversiones --- */
+
+    public void convert(Type from, Type to) {
+        char source = from.suffix();
+        char target = to.suffix();
+
+        if (source == target) return;
+
+        if (source == 'b') { // De CHAR
+            if (target == 'i') {
+                b2i();
+            } else if (target == 'f') {
+                b2i(); // Primero a int
+                i2f(); // Luego a double
+            }
+        }
+        else if (source == 'i') { // De INT
+            if (target == 'b') {
+                i2b();
+            } else if (target == 'f') {
+                i2f();
+            }
+        }
+        else if (source == 'f') { // De DOUBLE
+            if (target == 'i') {
+                f2i();
+            } else if (target == 'b') {
+                f2i(); // Primero a int
+                i2b(); // Luego a char
+            }
+        }
+    }
 
     public void b2i() { write("b2i"); }
     public void i2f() { write("i2f"); }

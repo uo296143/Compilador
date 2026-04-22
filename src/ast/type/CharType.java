@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Locatable;
+import ast.statement.expression.Variable;
 import visitor.Visitor;
 
 public class CharType extends AbstractType{
@@ -47,7 +48,7 @@ public class CharType extends AbstractType{
     @Override
     public void mustPromoteTo(Type type, Locatable locatable) {
         if(type instanceof ErrorType){
-            return this;
+            return;
         }
         if(!(type instanceof CharType || type instanceof IntType || type instanceof DoubleType)){
             new ErrorType("El tipo char no puede promocionar a : "+type.toString(), locatable);
@@ -110,5 +111,10 @@ public class CharType extends AbstractType{
     @Override
     public int numberOfBytes() {
         return 1;
+    }
+
+    @Override
+    public char suffix() {
+        return 'b';
     }
 }

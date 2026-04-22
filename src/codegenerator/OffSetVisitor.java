@@ -29,16 +29,21 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(FunctionDefinition funcDef, Void o) {
-        funcDef.getType().accept(this, o);
-
         // Parámetros : 4 + tamaño de los argumentos a su derecha (sin incluirse)
         List<Statement> statements = ((FunctionType) funcDef.getType()).getParameters();
-        int currentOffset = 4;
+        int currentParamOffset = 4;
+        int totalParamsSize = 0;
+
         for (Statement st : statements.reversed()) {
-            VariableDefinition varDef = (VariableDefinition) st;
-            varDef.setOffset(currentOffset);
-            currentOffset += varDef.getType().numberOfBytes();
+            VariableDefinition param = (VariableDefinition) st;
+            param.setOffset(currentParamOffset);
+
+            int size = param.getType().numberOfBytes();
+            currentParamOffset += size;
+            totalParamsSize += size;
         }
+        // Guardamos el total para la instrucción 'ret'
+        // funcDef.setTotalParamsSize(totalParamsSize);
         int numberOfBytes = 0;
         for(Statement statement : funcDef.getStatements()){
             statement.accept(this, o);
@@ -48,6 +53,8 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
                 varDef.setOffset(-numberOfBytes);
             }
         }
+        // Guardamos el total para la instrucción 'enter'
+        // funcDef.setTotalLocalsSize(totalLocalsSize);
         return null;
     }
 

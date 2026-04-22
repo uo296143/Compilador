@@ -32,4 +32,7 @@ public class DoubleLiteral extends AbstractExpression {
         return visitor.visit(this, parameter);
     }
 
+    public double getValue() {
+        return value;
+    }
 }

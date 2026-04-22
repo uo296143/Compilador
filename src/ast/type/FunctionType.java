@@ -43,19 +43,20 @@ public class FunctionType extends AbstractType{
      */
     @Override
     public Type parenthesis(List<Type> p, Locatable locatable) {
-        int contador = 0;
-        if(p.size() != statements.size()){
-            return new ErrorType("Se deberían haber pasado "+ statements.size() +" parámetros y se han pasado "+p.size()+" parámetros.", locatable);
+        if (p.size() != statements.size()) {
+            return new ErrorType("Esperados " + statements.size() + " parámetros, recibidos " + p.size(), locatable);
         }
-        for(Statement statement : statements){
-            if( ! ((VariableDefinition)statement).getType().equals(p.get(contador)) ){
-                return new ErrorType("El tipo de los argumentos no coincide con el tipo de los parámetros", locatable);
+        for (int i = 0; i < statements.size(); i++) {
+            Type paramType = ((VariableDefinition) statements.get(i)).getType();
+            Type argType = p.get(i);
+
+            try {
+                argType.mustPromoteTo(paramType, locatable);
+            } catch (Exception e) {
+                return new ErrorType("El argumento " + i + " no es compatible", locatable);
             }
-            // La comprobación de que los parámetros sean tipos simples ya la hacemos en el sintáctico.
-            ((VariableDefinition) statement).getType().mustBeBuiltIn(locatable);
-            contador++;
         }
-        return null;
+        return this.returnType;
     }
 
     @Override
