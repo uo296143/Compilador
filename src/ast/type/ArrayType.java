@@ -30,4 +30,9 @@ public class ArrayType extends AbstractType{
     public Type getOf(){
         return of;
     }
+
+    @Override
+    public int numberOfBytes() {
+        return of.numberOfBytes()*size;
+    }
 }

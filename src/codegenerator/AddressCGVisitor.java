@@ -22,7 +22,7 @@ public class AddressCGVisitor extends AbstractVisitor<Void, Void> {
     /**
      * [[Point: exp1 -> exp2 ID]] =
      *      address[[exp2]]
-     *      <pushi> expression2.type.getField(epression1.fieldName).offset
+     *      <pushi> expression2.type.getField(expression1.fieldName).offset
      *      <addi>
      * @param point
      * @param o
@@ -30,7 +30,9 @@ public class AddressCGVisitor extends AbstractVisitor<Void, Void> {
      */
     @Override
     public Void visit(Point point, Void o) {
-        ;
+        point.getLeftExpression().accept(this, o);
+        codeGenerator.push('i', ((StructType)point.getLeftExpression().getType()).getField(point.getFieldName()).getOffset());
+        codeGenerator.add('i');
         return null;
     }
 
@@ -73,6 +75,12 @@ public class AddressCGVisitor extends AbstractVisitor<Void, Void> {
      */
     @Override
     public Void visit(ArrayAccess arrayAccess, Void o) {
+        arrayAccess.getLeftExpression().accept(this, o);
+        arrayAccess.getRightExpression().accept(value, o);
+        codeGenerator.convert(arrayAccess.getRightExpression().getType(), new IntType());
+        codeGenerator.push('i', arrayAccess.getType().numberOfBytes());
+        codeGenerator.mul('i');
+        codeGenerator.add('i');
         return null;
     }
 

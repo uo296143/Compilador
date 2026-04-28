@@ -31,7 +31,9 @@ pushi -2
 addi
 pushi 1
 storei
-pusha 1
+pusha bp
+pushi -4
+addi
 pushb 48
 b2i
 pushi 3
@@ -44,7 +46,9 @@ loadi
 outi
 pushb 32
 outb
-pusha 1
+pusha bp
+pushi -4
+addi
 loadi
 outi
 pushb 10
@@ -57,6 +61,14 @@ i2f
 pusha 3
 loadf
 mulf
+outf
+pushb 32
+outb
+pushb 48
+b2i
+i2f
+pushf 48.0
+divf
 outf
 pushb 10
 outb
@@ -109,7 +121,7 @@ outi
 pushb 32
 outb
 pushi 0
-pushi 3
+pushi 0
 or
 outi
 pushb 32
@@ -119,3 +131,6 @@ not
 outi
 pushb 10
 outb
+pushb 123
+outb
+ret 0, 4, 0

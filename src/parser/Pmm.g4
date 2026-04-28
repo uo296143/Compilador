@@ -21,7 +21,7 @@ program returns [Program ast] locals [List<Definition> definitions = new ArrayLi
 mainFunction returns [FunctionDefinition ast] locals [List<Statement> statements = new ArrayList<Statement>()]:
                      'def' MAIN='main' '(' ')' '->' 'None' ':' '{' (variableDefinitions {$statements.addAll($variableDefinitions.ast);} )?
                      ( statement {$statements.add($statement.ast);} )* '}'
-                     {$ast = new FunctionDefinition($statements, "main", new FunctionType(new None(), new ArrayList<Statement>()), $MAIN.getLine(), $MAIN.getCharPositionInLine()+1);}
+                     {$ast = new FunctionDefinition($statements, "main", new FunctionType(new None(), new ArrayList<VariableDefinition>()), $MAIN.getLine(), $MAIN.getCharPositionInLine()+1);}
                      ;
 
 definition returns [List<Definition> ast = new ArrayList<Definition>()]: variableDefinitions {$ast.addAll($variableDefinitions.ast);}
@@ -56,14 +56,14 @@ varDefinition returns [List<VariableDefinition> ast = new ArrayList<VariableDefi
                      ;
 
 functionDefinition returns [FunctionDefinition ast] locals [List<Statement> statements = new ArrayList<Statement>(), Type returnType = new None(),
-                                                           List<Statement> functionParameters = new ArrayList<Statement>()]:
+                                                           List<VariableDefinition> functionParameters = new ArrayList<VariableDefinition>()]:
                            'def' ID '(' (parameters {$functionParameters = $parameters.ast;}) ?  ')' '->' (simple_type {$returnType = $simple_type.ast;} |'None') ':'
                            '{' (variableDefinitions {$statements.addAll($variableDefinitions.ast);} )?
                            ( statement {$statements.add($statement.ast);} )* '}'
                            {$ast = new FunctionDefinition($statements, $ID.text, new FunctionType($returnType, $functionParameters), $ID.getLine(), $ID.getCharPositionInLine() + 1);}
                            ;
 
-parameters returns [List<Statement> ast = new ArrayList<Statement>()] : (ID ':' st1=simple_type) {$ast.add(new VariableDefinition($st1.ast, $ID.text,  $ID.getLine(), $ID.getCharPositionInLine() + 1));}
+parameters returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()] : (ID ':' st1=simple_type) {$ast.add(new VariableDefinition($st1.ast, $ID.text,  $ID.getLine(), $ID.getCharPositionInLine() + 1));}
                    (',' ID ':' st2=simple_type {$ast.add(new VariableDefinition($st2.ast, $ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1));} )*
                    ;
 
@@ -152,7 +152,8 @@ fragment
 INT_PART: [1-9][0-9]*;
 
 fragment
-DECIMAL_PART: [0-9]*[1-9];
+DECIMAL_PART: [0-9]+;
+/*DECIMAL_PART: [0-9]*[1-9];*/
 
 fragment
 REAL_SIMPLE_CONSTANT: INT_PART'.'DECIMAL_PART? |

@@ -9,4 +9,9 @@ public class None extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
+    @Override
+    public int numberOfBytes() {
+        return 0;
+    }
+
 }

@@ -46,4 +46,13 @@ public class StructType extends AbstractType{
     public List<Field> getFields() {
         return fields;
     }
+
+    @Override
+    public int numberOfBytes() {
+        int contador = 0;
+        for(Field field : fields){
+            contador+=field.getType().numberOfBytes();
+        }
+        return contador;
+    }
 }

@@ -19,6 +19,7 @@ public class ErrorHandler {
     public void addError(ErrorType errorType){
         if (errorType != null) {
             this.errors.add(errorType);
+            System.out.println("Error añadido"+ errorType.toString());
         }
     }
 

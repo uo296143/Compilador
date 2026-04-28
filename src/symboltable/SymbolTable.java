@@ -35,11 +35,10 @@ public class SymbolTable {
 	}
 	
 	public Definition find(String id) {
-		for(Map<String, Definition> map : table){
-			for(String name : map.keySet()){
-				if(name.equals(id)){
-					return map.get(name);
-				}
+		for(Map<String, Definition> map : table.reversed()){
+			Definition def = map.get(id);
+			if (def != null) {
+				return def;
 			}
 		}
 		return null;

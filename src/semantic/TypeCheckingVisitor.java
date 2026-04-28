@@ -181,4 +181,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+    /*@Override
+    public Void visit(FunctionType funcType, Void o) {
+
+        for(Statement statement : funcType.getParameters()){
+            statement.accept(this, o);
+        }
+        return null;
+    }*/
+
 }

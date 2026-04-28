@@ -1,0 +1,139 @@
+#source "input-2.txt"
+' Variables Globales
+#line 2
+' ArrayType numeros (offset 0)
+#line 3
+' StructType ficha (offset 6)
+' 
+' Invocación a la función main
+call main
+halt
+#line 5
+main:
+' Parametros y variables locales información
+enter 10
+#line 7
+' IntType i (offset -2)
+#line 8
+' ArrayType puntos (offset -10)
+pusha 6
+pushi 0
+addi
+pushi 1
+storei
+pusha 6
+pushi 2
+addi
+pushf 8.5
+storef
+pusha 0
+pushi 0
+pushi 2
+muli
+addi
+pushi 50
+storei
+pusha 0
+pushi 1
+pushi 2
+muli
+addi
+pushi 10
+storei
+pusha bp
+pushi -10
+addi
+pushi 1
+pushi 4
+muli
+addi
+pushi 0
+addi
+pushi 5
+storei
+pusha bp
+pushi -2
+addi
+pusha 0
+pushi 0
+pushi 2
+muli
+addi
+loadi
+pusha 0
+pushi 1
+pushi 2
+muli
+addi
+loadi
+divi
+pusha bp
+pushi -10
+addi
+pushi 1
+pushi 4
+muli
+addi
+pushi 0
+addi
+loadi
+addi
+storei
+pushb 73
+outb
+pushb 68
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha 6
+pushi 0
+addi
+loadi
+outi
+pushb 10
+outb
+pushb 78
+outb
+pushb 111
+outb
+pushb 116
+outb
+pushb 97
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha 6
+pushi 2
+addi
+loadf
+outf
+pushb 10
+outb
+pushb 82
+outb
+pushb 101
+outb
+pushb 115
+outb
+pushb 117
+outb
+pushb 108
+outb
+pushb 116
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha bp
+pushi -2
+addi
+loadi
+outi
+pushb 10
+outb
+ret 0, 10, 0

@@ -10,12 +10,12 @@ import java.util.List;
 public class FunctionType extends AbstractType{
 
     private Type returnType;
-    private List<Statement> statements;
+    private List<VariableDefinition> parameters;
     private int numberOfBytesOfParameters;
 
-    public FunctionType(Type returnType, List<Statement> statements) {
+    public FunctionType(Type returnType, List<VariableDefinition> statements) {
         this.returnType = returnType;
-        this.statements = statements;
+        this.parameters = statements;
     }
 
     @Override
@@ -23,16 +23,12 @@ public class FunctionType extends AbstractType{
         return visitor.visit(this, parameter);
     }
 
-    public List<Statement> getStatements() {
-        return statements;
+    public List<VariableDefinition> getParameters() {
+        return parameters;
     }
 
     public Type getReturnType() {
         return returnType;
-    }
-
-    public List<Statement> getParameters(){
-        return List.copyOf(statements);
     }
 
     /**
@@ -44,11 +40,11 @@ public class FunctionType extends AbstractType{
      */
     @Override
     public Type parenthesis(List<Type> p, Locatable locatable) {
-        if (p.size() != statements.size()) {
-            return new ErrorType("Esperados " + statements.size() + " parámetros, recibidos " + p.size(), locatable);
+        if (p.size() != parameters.size()) {
+            return new ErrorType("Esperados " + parameters.size() + " parámetros, recibidos " + p.size(), locatable);
         }
-        for (int i = 0; i < statements.size(); i++) {
-            Type paramType = ((VariableDefinition) statements.get(i)).getType();
+        for (int i = 0; i < parameters.size(); i++) {
+            Type paramType = ((VariableDefinition) parameters.get(i)).getType();
             Type argType = p.get(i);
 
             try {

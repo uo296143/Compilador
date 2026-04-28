@@ -200,7 +200,7 @@ public class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
     @Override
     public TR visit(FunctionType functionType, TP o) {
-        for(Statement statement : functionType.getStatements()){
+        for(Statement statement : functionType.getParameters()){
             statement.accept(this, o);
         }
         return null;

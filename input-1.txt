@@ -1,0 +1,86 @@
+# Variables globales para probar el Scope Global
+global_int: int;
+global_double: double;
+caracter: char;
+
+def main()->None: {
+    # Variables locales para probar el Stack Frame (enter 13)
+    # i:2, d:8, c:1, temp:2 = 13 bytes
+    global_int, temp: int;
+    global_double: double;
+    c: char;
+
+    # --- PRUEBA 1: ÁMBITOS Y SHADOWING ---
+    global_int = 10;        # Esto debe ir al offset -2 (local), no al global
+    global_double = 5.5;    # Esto debe ir al offset -12 (local)
+    c = 'A';                # Offset -13
+
+    # --- PRUEBA 2: ARITMÉTICA Y PROMOCIONES (Char -> Int -> Double) ---
+    # 'A' es 65. 65 + 10 = 75.
+    # 75 * 2.0 = 150.0
+    global_double = (c + global_int) * 2.0;
+
+    # --- PRUEBA 3: OPERACIONES DE MÓDULO Y CAST ---
+    # 10 % 3 = 1
+    temp = global_int % 3;
+
+    # --- PRUEBA 4: LÓGICA Y COMPARACIÓN ---
+    # (150.0 > 100) es 1. (1 == 1) es 1. 1 && 1 = 1.
+    temp = (global_double > 100.0) && (temp == 1);
+
+    # --- SALIDA DE RESULTADOS ---
+
+    # Debe imprimir: A (caracter c local)
+    print c, '\n';
+
+    # Debe imprimir: 150.0 1
+    print global_double, ' ', temp, '\n';
+
+    # --- PRUEBA 5: CARACTERES ESPECIALES Y DECIMALES ---
+    # '\123' es '{', '\110' es 'H'
+    print '\123', ' ', '\110', 'i', '\n';
+
+    # --- PRUEBA 6: EXPRESIÓN DE UNARIO Y NEGATIVOS ---
+    # -5 + 10 * -2 = -25
+    global_int = -5 + 10 * -2;
+    print global_int, '\n';
+
+    # --- PRUEBA 7: INPUT Y OPERACIÓN MIXTA ---
+    print 'I', 'n', 'p', 'u', 't', ' ', 'v', 'a', 'l', 'u', 'e', ':', ' ';
+    input global_double;
+    # Si metes 10.0, debe salir 5.0 (10.0 / 2)
+    print global_double / 2.0, '\n';
+
+    # --- PRUEBA 8: STACK STRESS TEST ---
+        # Una expresión larga que usa muchos registros de la pila
+        # -( (10 + 5) * 2 ) == ( -40 + 10 )
+        # Izquierda: -(15 * 2) = -30
+        # Derecha: -30
+        # Resultado esperado: 1 (True)
+
+        temp = -( (10 + 5) * 2 ) == ( -40 + 10 );
+        print 'S', 't', 'a', 'c', 'k', ' ', 'O', 'K', ':', ' ', temp, '\n';
+
+    # --- PRUEBA 12: LÓGICA DE NEGACIÓN (!) ---
+        # 1. Negación de literales
+        # !0 debe ser 1
+        # !1 debe ser 0
+        print '!', '0', ':', ' ', !0, ' ', '!', '1', ':', ' ', !1, '\n';
+
+        # 2. Doble negación (!!1) -> debe volver a ser 1
+        temp = !!1;
+        print '!', '!', '1', ':', ' ', temp, '\n';
+
+        # 3. Negación de expresiones de comparación
+        # !(10 > 5) -> !(1) -> 0
+        # !(5 > 10) -> !(0) -> 1
+        print '!', '(', '1', '0', '>', '5', ')', ':', ' ', !(10 > 5), '\n';
+        print '!', '(', '5', '>', '1', '0', ')', ':', ' ', !(5 > 10), '\n';
+
+        # 4. Caso complejo: Negación en expresiones compuestas
+        # ! ( (5==5) && (0 > 1) ) -> ! ( 1 && 0 ) -> !0 -> 1
+        temp = !((5==5) && (0 > 1));
+        print 'C', 'o', 'm', 'p', 'l', 'e', 'j', 'o', ':', ' ', temp, '\n';
+
+
+}

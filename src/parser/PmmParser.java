@@ -1,4 +1,4 @@
-// Generated from /Users/juanfernandezlopez21/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
+// Generated from C:/Users/juanf/IdeaProjects/Compilador/src/parser/Pmm.g4 by ANTLR 4.13.2
 package parser;
 
     import ast.*;
@@ -271,7 +271,7 @@ public class PmmParser extends Parser {
 			}
 			setState(62);
 			match(T__8);
-			((MainFunctionContext)_localctx).ast =  new FunctionDefinition(_localctx.statements, "main", new FunctionType(new None(), new ArrayList<Statement>()), ((MainFunctionContext)_localctx).MAIN.getLine(), ((MainFunctionContext)_localctx).MAIN.getCharPositionInLine()+1);
+			((MainFunctionContext)_localctx).ast =  new FunctionDefinition(_localctx.statements, "main", new FunctionType(new None(), new ArrayList<VariableDefinition>()), ((MainFunctionContext)_localctx).MAIN.getLine(), ((MainFunctionContext)_localctx).MAIN.getCharPositionInLine()+1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -509,7 +509,7 @@ public class PmmParser extends Parser {
 		public FunctionDefinition ast;
 		public List<Statement> statements = new ArrayList<Statement>();
 		public Type returnType = new None();
-		public List<Statement> functionParameters = new ArrayList<Statement>();
+		public List<VariableDefinition> functionParameters = new ArrayList<VariableDefinition>();
 		public Token ID;
 		public ParametersContext parameters;
 		public Simple_typeContext simple_type;
@@ -642,7 +642,7 @@ public class PmmParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParametersContext extends ParserRuleContext {
-		public List<Statement> ast = new ArrayList<Statement>();
+		public List<VariableDefinition> ast = new ArrayList<VariableDefinition>();
 		public Token ID;
 		public Simple_typeContext st1;
 		public Simple_typeContext st2;

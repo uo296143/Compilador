@@ -66,7 +66,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         codeGenerator.comment("Parametros y variables locales información");
         int bytesLocales = funcDef.getNumberOfBytesOfLocalVariables();
         int bytesParams = ((FunctionType)funcDef.getType()).getNumberOfBytesOfParameters();
-        int bytesReturn = funcDef.getType().numberOfBytes();
+        int bytesReturn = ((FunctionType)funcDef.getType()).getReturnType().numberOfBytes();
         // 3 - Reservar espacio para las variables locales
         codeGenerator.enter(bytesLocales);
         // 4 - Ejecutar todas las sentencias (Statements) del cuerpo

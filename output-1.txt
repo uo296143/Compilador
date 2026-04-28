@@ -1,0 +1,358 @@
+#source "input-1.txt"
+' Variables Globales
+#line 2
+' IntType global_int (offset 0)
+#line 3
+' DoubleType global_double (offset 2)
+#line 4
+' CharType caracter (offset 6)
+' 
+' Invocación a la función main
+call main
+halt
+#line 6
+main:
+' Parametros y variables locales información
+enter 9
+#line 9
+' IntType global_int (offset -2)
+#line 9
+' IntType temp (offset -4)
+#line 10
+' DoubleType global_double (offset -8)
+#line 11
+' CharType c (offset -9)
+pusha bp
+pushi -2
+addi
+pushi 10
+storei
+pusha bp
+pushi -8
+addi
+pushf 5.5
+storef
+pusha bp
+pushi -9
+addi
+pushb 65
+storeb
+pusha bp
+pushi -8
+addi
+pusha bp
+pushi -9
+addi
+loadb
+b2i
+pusha bp
+pushi -2
+addi
+loadi
+addi
+i2f
+pushf 2.0
+mulf
+storef
+pusha bp
+pushi -4
+addi
+pusha bp
+pushi -2
+addi
+loadi
+pushi 3
+modi
+storei
+pusha bp
+pushi -4
+addi
+pusha bp
+pushi -8
+addi
+loadf
+pushf 100.0
+gtf
+pusha bp
+pushi -4
+addi
+loadi
+pushi 1
+eqi
+and
+storei
+pusha bp
+pushi -9
+addi
+loadb
+outb
+pushb 10
+outb
+pusha bp
+pushi -8
+addi
+loadf
+outf
+pushb 32
+outb
+pusha bp
+pushi -4
+addi
+loadi
+outi
+pushb 10
+outb
+pushb 123
+outb
+pushb 32
+outb
+pushb 110
+outb
+pushb 105
+outb
+pushb 10
+outb
+pusha bp
+pushi -2
+addi
+pushi 5
+pushi -1
+muli
+pushi 10
+pushi 2
+pushi -1
+muli
+muli
+addi
+storei
+pusha bp
+pushi -2
+addi
+loadi
+outi
+pushb 10
+outb
+pushb 73
+outb
+pushb 110
+outb
+pushb 112
+outb
+pushb 117
+outb
+pushb 116
+outb
+pushb 32
+outb
+pushb 118
+outb
+pushb 97
+outb
+pushb 108
+outb
+pushb 117
+outb
+pushb 101
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha bp
+pushi -8
+addi
+inf
+storef
+pusha bp
+pushi -8
+addi
+loadf
+pushf 2.0
+divf
+outf
+pushb 10
+outb
+pusha bp
+pushi -4
+addi
+pushi 10
+pushi 5
+addi
+pushi 2
+muli
+pushi -1
+muli
+pushi 40
+pushi -1
+muli
+pushi 10
+addi
+eqi
+storei
+pushb 83
+outb
+pushb 116
+outb
+pushb 97
+outb
+pushb 99
+outb
+pushb 107
+outb
+pushb 32
+outb
+pushb 79
+outb
+pushb 75
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha bp
+pushi -4
+addi
+loadi
+outi
+pushb 10
+outb
+pushb 33
+outb
+pushb 48
+outb
+pushb 58
+outb
+pushb 32
+outb
+pushi 0
+not
+outi
+pushb 32
+outb
+pushb 33
+outb
+pushb 49
+outb
+pushb 58
+outb
+pushb 32
+outb
+pushi 1
+not
+outi
+pushb 10
+outb
+pusha bp
+pushi -4
+addi
+pushi 1
+not
+not
+storei
+pushb 33
+outb
+pushb 33
+outb
+pushb 49
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha bp
+pushi -4
+addi
+loadi
+outi
+pushb 10
+outb
+pushb 33
+outb
+pushb 40
+outb
+pushb 49
+outb
+pushb 48
+outb
+pushb 62
+outb
+pushb 53
+outb
+pushb 41
+outb
+pushb 58
+outb
+pushb 32
+outb
+pushi 10
+pushi 5
+gti
+not
+outi
+pushb 10
+outb
+pushb 33
+outb
+pushb 40
+outb
+pushb 53
+outb
+pushb 62
+outb
+pushb 49
+outb
+pushb 48
+outb
+pushb 41
+outb
+pushb 58
+outb
+pushb 32
+outb
+pushi 5
+pushi 10
+gti
+not
+outi
+pushb 10
+outb
+pusha bp
+pushi -4
+addi
+pushi 5
+pushi 5
+eqi
+pushi 0
+pushi 1
+gti
+and
+not
+storei
+pushb 67
+outb
+pushb 111
+outb
+pushb 109
+outb
+pushb 112
+outb
+pushb 108
+outb
+pushb 101
+outb
+pushb 106
+outb
+pushb 111
+outb
+pushb 58
+outb
+pushb 32
+outb
+pusha bp
+pushi -4
+addi
+loadi
+outi
+pushb 10
+outb
+ret 0, 9, 0

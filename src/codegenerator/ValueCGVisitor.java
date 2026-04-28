@@ -100,7 +100,8 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(ArrayAccess arrayAccess, Void o) {
-        ;
+        arrayAccess.accept(address, o);
+        codeGenerator.load(arrayAccess.getType().suffix());
         return null;
     }
 
@@ -141,7 +142,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
         codeGenerator.convert(compOp.getLeftExpression().getType(), mayor);
         compOp.getRightExpression().accept(this, o);
         codeGenerator.convert(compOp.getRightExpression().getType(), mayor);
-        char suffix = compOp.getType().suffix();
+        char suffix = mayor.suffix(); // Usar el sufijo del mayor para la comparación.
         switch (compOp.getOperator()) {
             case ">":  codeGenerator.gt(suffix); break;
             case ">=": codeGenerator.ge(suffix); break;
@@ -217,7 +218,8 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Point point, Void o) {
-        ;
+        point.accept(address, o);
+        codeGenerator.load(point.getType().suffix());
         return null;
     }
 

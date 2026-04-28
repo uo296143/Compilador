@@ -30,27 +30,28 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(FunctionDefinition funcDef, Void o) {
         // Parámetros : 4 + tamaño de los argumentos a su derecha (sin incluirse)
-        List<Statement> statements = ((FunctionType) funcDef.getType()).getParameters();
+        List<VariableDefinition> parameters = ((FunctionType) funcDef.getType()).getParameters();
         int currentParamOffset = 4;
         int totalParamsSize = 0;
+        int size; // Utilizada para saber el tamaño puntual de una variable
 
-        for (Statement st : statements.reversed()) {
-            VariableDefinition param = (VariableDefinition) st;
+        for (VariableDefinition param : parameters.reversed()) {
             param.setOffset(currentParamOffset);
-
-            int size = param.getType().numberOfBytes();
+            size = param.getType().numberOfBytes();
             currentParamOffset += size;
             totalParamsSize += size;
         }
-        // Guardamos el total de la memoria de las variables locales para la instrucción 'ret'
+        // Guardamos lo que ocupan las variables locales para la instrucción 'ret'
         ((FunctionType)funcDef.getType()).setNumberOfBytesOfParameters(totalParamsSize);
+
         int numberOfBytes = 0;
         int totalLocalsSize = 0;
+
         for(Statement statement : funcDef.getStatements()){
             statement.accept(this, o);
             if(statement instanceof VariableDefinition varDef){
                 // Variables Locales : el tamaño de las anteriores + el de ellas mismas.
-                int size = varDef.getType().numberOfBytes();
+                size = varDef.getType().numberOfBytes();
                 numberOfBytes += size;
                 totalLocalsSize += size;
                 varDef.setOffset(-numberOfBytes);
@@ -58,6 +59,7 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
         }
         // Guardamos el total para la instrucción 'enter'
         funcDef.setNumberOfBytesOfLocalVariables(totalLocalsSize);
+        // definimos el
         return null;
     }
 

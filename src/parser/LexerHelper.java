@@ -15,13 +15,13 @@ public class LexerHelper {
 	/**
 	 * 'a' -> a
 	 * '\123' -> el caracter ascii 123
-	 * '\\t' -> return \t
+	 * '\t' -> return \t
 	 * @param str
 	 * @return
 	 */
 	public static char lexemeToChar(String str) {
 		try {
-			// 1. Quitamos las comillas simples: 'a' -> a
+			// 1 - Quitamos las comillas simples
 			String inner = str.substring(1, str.length() - 1);
 			// 2. Si empieza por \, es una secuencia de escape
 			if (inner.startsWith("\\")) {

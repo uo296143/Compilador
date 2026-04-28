@@ -1,0 +1,29 @@
+# Globales
+numeros: [3] int;
+ficha: struct { id: int; nota: double; };
+
+def main() -> None: {
+    # Locales
+    i: int;
+    puntos: [2] struct { x, y: int; };
+
+    # 1. Probar Struct Global
+    ficha.id = 1;
+    ficha.nota = 8.5;
+
+    # 2. Probar Array Global
+    numeros[0] = 50;
+    numeros[1] = 10;
+
+    # 3. Probar Array de Structs Local
+    puntos[1].y = 5;
+
+    # 4. Cálculos combinados
+    # i = (50 / 10) + 5 = 5 + 5 = 10
+    i = (numeros[0] / numeros[1]) + puntos[1].y;
+
+    # --- SALIDA ---
+    print 'I', 'D', ':', ' ', ficha.id, '\n';
+    print 'N', 'o', 't', 'a', ':', ' ', ficha.nota, '\n';
+    print 'R', 'e', 's', 'u', 'l', 't', ':', ' ', i, '\n';
+}
