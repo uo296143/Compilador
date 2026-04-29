@@ -235,7 +235,16 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
-    // NO HACER
+    /**
+     * value[[FunctionInvocation:exp1 → exp2 exp3*]] =
+     *      for(int i=0; i<exp3*.size(); i++)
+     *          value[[exp3*[i]]]
+     *          cg.convert(exp3*.type, exp2.type.params[i].type)
+     *      <call> exp2.name
+     * @param funcInvoc
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(FunctionInvocation funcInvoc, Void o) {
         ;

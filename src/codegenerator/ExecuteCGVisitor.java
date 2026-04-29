@@ -140,7 +140,17 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
-    // NO HACER
+    /**
+     * execute[[Return: statement -> expression]])(functionDefinition) =
+     *      Value[[exp]]
+     *      cg.covert(exp.type, functionDefinition.type.returnType)
+     *      <ret> functionDefinition.type.returnType.numberOfBytes <,>
+     *            functionDefinition.bytesLocalsSum <,>
+     *            functionDefinition.type.bytesParamsSum
+     * @param ret
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(Return ret, Void o) {
         ;
@@ -168,7 +178,20 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
-    // NO HACER
+    /**
+     * Opción 1 o 2, la que se quiera
+     * address[[FunctionInvocation:stm → exp1 exp2*]] =
+     *      for(int i=0; i<exp2*.size(); i++)
+     *          value[[exp2*[i]]]
+     *          cg.convert(exp2*.type, exp1.type.params[i].type)
+     *      <call> exp1.name
+     *      value[[ (Expression) stm ]]
+     *      if(!(exp1.type.returnType io None))
+     *          <pop> exp1.type.returnType.suffix()
+     * @param funcInvoc
+     * @param o
+     * @return
+     */
     @Override
     public Void visit(FunctionInvocation funcInvoc, Void o) {
         ;
