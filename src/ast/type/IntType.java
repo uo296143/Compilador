@@ -46,7 +46,7 @@ public class IntType extends AbstractType{
             return this;
         }
         if(t instanceof CharType || t instanceof IntType)
-            return t;
+            return new IntType();
         return new ErrorType("No se puede hacer una operación lógica con "+t.toString(),locatable);
     }
 
